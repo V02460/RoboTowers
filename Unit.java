@@ -94,7 +94,7 @@ public abstract class Unit extends NetworkEntity {
             this.speed -= 0.1*this.maxSpeed;
         }
         else if (changeSpeed == 1) {
-            this.speed += 0.1*this.maxSpeed
+            this.speed += 0.1*this.maxSpeed;
         }
         else {
             this.speed -= 0.01*this.maxSpeed;
@@ -126,10 +126,10 @@ public abstract class Unit extends NetworkEntity {
 
     @Override
     public void setPosition(Vector2d position){
-        super.setPosition(position.getX(), position.getY());
-        armourBase.setPosition(position.getX(), position.getY());
-        armourTower.setPosition(position.getX(), position.getY());
-        weapon.setPosition(position.getX(), position.getY());
+        super.setPosition(position);
+        armourBase.setPosition(position);
+        armourTower.setPosition(position);
+        weapon.setPosition(position);
     }
 
     public void shoot(){
