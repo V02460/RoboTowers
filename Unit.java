@@ -133,7 +133,8 @@ public abstract class Unit extends NetworkEntity {
     }
 
     public void shoot(){
-        //TODO: create Projectile
+        Projectile bullet = new Projectile(this.getPosition(), this.getDirection());
+         //TODO: register projectiles for Collision Detection
     }
 
     public void aim(Vector2d targetPos){
