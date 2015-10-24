@@ -11,6 +11,8 @@ public class RoboTowers extends BasicGame
 {
 	private map.Map map;
 	graphics.EntityList entitylist;
+	double x_off;
+	double y_off;
 	
 	
 	public RoboTowers(String gamename)
@@ -23,6 +25,12 @@ public class RoboTowers extends BasicGame
 		map=new map.SimpleLayerMap(40, 40);
 		entitylist=new graphics.EntityList();
 		entitylist.insertMap(map);
+
+		// Camera Offset to be moved into Player
+		x_off=0;
+		y_off=0;
+		// Size of the window. To be moved to initialisation.
+		entitylist.SetWindowSize(800,640);
 		
 	}
 
@@ -34,6 +42,13 @@ public class RoboTowers extends BasicGame
 	{
 		//g.drawString("Howdy!", 10, 10);
 		entitylist.drawEntities();
+		/*
+		// Camera Auto-Moving
+		// x_off+=1.0;
+		// y_off+=1.0;
+		
+		// Draw Stuff
+		entitylist.drawEntities(x_off, y_off);*/
 		
 	}
 
