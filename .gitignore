@@ -1,2 +1,8 @@
 *.sublime-workspace
+<<<<<<< HEAD
+out/
+.idea/workspace.xml
+bin/
+=======
 /bin/
+>>>>>>> origin/master
