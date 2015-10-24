@@ -10,5 +10,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lwjgl" level="project" />
     <orderEntry type="library" name="slick" level="project" />
+    <orderEntry type="library" name="vecmath" level="project" />
   </component>
 </module>
