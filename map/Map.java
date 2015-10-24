@@ -14,10 +14,10 @@ public abstract class Map {
 		return tiles[x][y];
 	}
 
-	public int get_width () {
+	public int getWidth () {
 		return tiles.length;
 	}
-	public int get_height () {
+	public int getHeight () {
 		return tiles[0].length;    // tiles[0] fuer die leere Map abfangen
 	}
 

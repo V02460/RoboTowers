@@ -6,10 +6,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+
 public class RoboTowers extends BasicGame
 {
 	private map.Map map;
-	private graphics.Map_Graphics display;
+	graphics.EntityList entitylist;
+	
 	
 	public RoboTowers(String gamename)
 	{
@@ -18,10 +20,9 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map=new map.SimpleLayerMap(20,15);
-		display=new graphics.Map_Graphics();
-		display.InitMapGraphics();
-		
+		map=new map.FixedMap(20,15);
+		entitylist=new graphics.EntityList();
+		entitylist.insertMap(map);
 		
 	}
 
@@ -32,8 +33,8 @@ public class RoboTowers extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		//g.drawString("Howdy!", 10, 10);
-		display.DrawMap(map);
-
+		entitylist.drawEntities();
+		
 	}
 
 	public static void main(String[] args)
