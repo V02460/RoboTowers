@@ -90,7 +90,7 @@ public class RoboTowers extends BasicGame
 		try
 		{
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new RoboTowers("Simple Slick Game"));
+			appgc = new AppGameContainer(new RoboTowers("RoboTowers Epicness!!!1111einself"));
 
 			appgc.setMinimumLogicUpdateInterval(20);
 			appgc.setMaximumLogicUpdateInterval(20);

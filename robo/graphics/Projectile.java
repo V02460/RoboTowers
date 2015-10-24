@@ -1,6 +1,8 @@
 package robo.graphics;
 
 import org.newdawn.slick.SlickException;
+import robo.network.NetworkEntity;
+import robo.network.Type;
 
 import javax.vecmath.Point2d;
 
@@ -9,15 +11,14 @@ import javax.vecmath.Point2d;
  *
  * A single projectile fired by a robot
  *
- * TODO: should extend NetworkEntity
  */
-public class Projectile extends Entity {
+public class Projectile extends NetworkEntity {
     private static float speed = 10;
 
     private float power;
 
     public Projectile(Point2d spawnPosition, float spawnDirection, float spawnPower) throws SlickException{
-        super("projectile.png", spawnPosition, spawnDirection, 201);
+        super("projectile.png", spawnPosition, spawnDirection, 201, Type.BULLET, null, true);
 
         this.power = spawnPower;
     }

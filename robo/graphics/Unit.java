@@ -1,6 +1,9 @@
 package robo.graphics;
 
 import org.newdawn.slick.SlickException;
+import robo.network.NetworkEntity;
+import robo.network.Type;
+
 import javax.vecmath.Point2d;
 
 /**
@@ -10,9 +13,8 @@ import javax.vecmath.Point2d;
  * Be they the players, mobile npcs or static towers.
  *
  *
- * TODO: Should extend NetworkEntity
  */
-public abstract class Unit extends Entity {
+public abstract class Unit extends NetworkEntity {
 
     private boolean alive;
 
@@ -31,7 +33,7 @@ public abstract class Unit extends Entity {
 
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
-        super("foundation.png", spawnPos, spawnDirection, 101);
+        super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, null, true);
 
         this.speed = 0;
         this.maxSpeed = 0;
