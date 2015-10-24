@@ -10,6 +10,7 @@ public class Entity {
 	private Point2d position;
 	private float rotation;
 	private Image image;
+	private int layer;
 	
 	public Entity(String path, Point2d p, float r) throws SlickException {
 		setPosition(p);
@@ -24,7 +25,15 @@ public class Entity {
 	public void setPosition(Point2d p) {
 		position=p;
 	}
-	
+
+	public int getLayer() {
+		return layer;
+	}
+
+	public void setLayer(int l) {
+		layer=l;
+	}
+
 	public float getRotation() {
 		return rotation;
 	}

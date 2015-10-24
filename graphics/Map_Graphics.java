@@ -18,9 +18,9 @@ public class Map_Graphics {
 		for ( int x = 0; x < map.get_width(); x++ ) {
 			for ( int y = 0; y < map.get_height(); y++ ) {
 				if(map.get(x, y)==TileType.Wall) {
-					img_wall.draw(x*32,y*32 );
+					img_wall.drawCentered(x*32,y*32 );
 				} else {
-					img_floor.draw(x*32,y*32 );					
+					img_floor.drawCentered(x*32,y*32 );					
 				}
 			}
 		}

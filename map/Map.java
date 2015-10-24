@@ -22,7 +22,6 @@ public abstract class Map {
 	}
 
 	
-	
 	@Override
 	public String toString() {
 		String out = "";
