@@ -18,7 +18,7 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map=new map.FixedMap(0,0);
+		map=new map.SimpleLayerMap(20,15);
 		display=new graphics.Map_Graphics();
 		display.InitMapGraphics();
 		
