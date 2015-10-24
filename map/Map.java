@@ -14,6 +14,14 @@ public abstract class Map {
 		return tiles[x][y];
 	}
 
+	public int getWidth () {
+		return tiles.length;
+	}
+	public int getHeight () {
+		return tiles[0].length;    // tiles[0] fuer die leere Map abfangen
+	}
+
+	
 	@Override
 	public String toString() {
 		String out = "";
