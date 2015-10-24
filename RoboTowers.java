@@ -22,7 +22,7 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map=new map.SimpleLayerMap(40, 40);
+		map=new map.SimpleLayerMap(100, 100);
 		entitylist=new graphics.EntityList();
 		entitylist.insertMap(map);
 
@@ -30,7 +30,7 @@ public class RoboTowers extends BasicGame
 		x_off=0;
 		y_off=0;
 		// Size of the window. To be moved to initialisation.
-		entitylist.SetWindowSize(800,640);
+		entitylist.SetWindowSize(1366,786);
 		
 	}
 
@@ -39,16 +39,13 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
-	{
-		//g.drawString("Howdy!", 10, 10);
-		entitylist.drawEntities();
-		/*
+	{		
 		// Camera Auto-Moving
 		// x_off+=1.0;
 		// y_off+=1.0;
 		
 		// Draw Stuff
-		entitylist.drawEntities(x_off, y_off);*/
+		entitylist.drawEntities(x_off, y_off);
 		
 	}
 
