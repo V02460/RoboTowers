@@ -1,4 +1,4 @@
-package map;
+package robo.map;
 
 public class SimpleLayerMap extends Map {
 

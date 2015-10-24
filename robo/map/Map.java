@@ -1,4 +1,4 @@
-package map;
+package robo.map;
 
 public abstract class Map {
 	protected TileType[][] tiles;

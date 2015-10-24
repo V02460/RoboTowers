@@ -1,11 +1,7 @@
-package graphics;
+package robo.graphics;
 
-import graphics.Projectile;
 import org.newdawn.slick.SlickException;
-
 import javax.vecmath.Point2d;
-
-import static graphics.Materials.*;
 
 /**
  * Created by Matthias on 24.10.2015.

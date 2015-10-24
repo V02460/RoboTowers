@@ -1,3 +1,5 @@
+package robo;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -6,11 +8,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import robo.map.Map;
+import robo.graphics.EntityList;
 
 public class RoboTowers extends BasicGame
 {
-	private map.Map map;
-	graphics.EntityList entitylist;
+	private Map map;
+	EntityList entitylist;
 	double x_off;
 	double y_off;
 	
@@ -22,8 +26,8 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map=new map.SimpleLayerMap(100, 100);
-		entitylist=new graphics.EntityList();
+		map=new robo.map.SimpleLayerMap(100, 100);
+		entitylist=new robo.graphics.EntityList();
 		entitylist.insertMap(map);
 
 		// Camera Offset to be moved into Player

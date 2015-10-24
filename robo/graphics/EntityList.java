@@ -1,4 +1,4 @@
-package graphics;
+package robo.graphics;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -7,8 +7,9 @@ import java.util.LinkedList;
 import javax.vecmath.Point2d;
 
 import org.newdawn.slick.SlickException;
+import robo.map.TileType;
 
-import map.TileType;
+
 
 public class EntityList {
 	private static Map<Integer, List<Entity>> entities = new HashMap<>();
@@ -57,7 +58,7 @@ public class EntityList {
 	
 	
 	// Transform map into entities
-	public void insertMap(map.Map map) throws SlickException {
+	public void insertMap(robo.map.Map map) throws SlickException {
 		for ( int x = 0; x < map.getWidth(); x++ ) {
 			for ( int y = 0; y < map.getHeight(); y++ ) {
 				String image_path;
@@ -65,11 +66,11 @@ public class EntityList {
 				
 				// chose Image
 				if(map.get(x,y)==TileType.Wall){
-					image_path="res/gfx/wall.png";
+					image_path="robo/res/gfx/wall.png";
 				} else if(map.get(x,y)==TileType.PlayerSpawn){
-					image_path="res/gfx/player.png";
+					image_path="robo/res/gfx/player.png";
 				} else {
-					image_path="res/gfx/floor.png";
+					image_path="robo/res/gfx/floor.png";
 				}
 				// Define Image and Position and push to entity-list
 				// Image size assumed to be 32x32

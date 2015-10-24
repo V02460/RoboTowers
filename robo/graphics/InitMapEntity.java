@@ -1,4 +1,4 @@
-package graphics;
+package robo.graphics;
 
 public class InitMapEntity {
 

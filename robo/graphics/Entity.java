@@ -1,4 +1,4 @@
-package graphics;
+package robo.graphics;
 
 import javax.vecmath.Point2d;
 

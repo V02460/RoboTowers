@@ -1,4 +1,4 @@
-package graphics;
+package robo.graphics;
 
 import org.newdawn.slick.SlickException;
 

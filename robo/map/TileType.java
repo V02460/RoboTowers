@@ -1,4 +1,4 @@
-package map;
+package robo.map;
 
 public enum TileType {
 	Nothing,
