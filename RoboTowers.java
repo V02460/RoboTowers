@@ -20,7 +20,7 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map=new map.FixedMap(20,15);
+		map=new map.SimpleLayerMap(25,20);
 		entitylist=new graphics.EntityList();
 		entitylist.insertMap(map);
 		
@@ -45,7 +45,7 @@ public class RoboTowers extends BasicGame
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new RoboTowers("Simple Slick Game"));
-			appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(800, 640, false);
 			appgc.start();
 		}
 		catch (SlickException ex)
