@@ -19,6 +19,15 @@ public abstract class Map {
 		return tiles[x][y];
 	}
 
+	public int get_width () {
+		return width;
+	}
+	public int get_height () {
+		return height;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		String out = "";
