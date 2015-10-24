@@ -1,4 +1,11 @@
-import javax.vecmath.Vector2d;
+package graphics;
+
+import graphics.Projectile;
+import org.newdawn.slick.SlickException;
+
+import javax.vecmath.Point2d;
+
+import static graphics.Materials.*;
 
 /**
  * Created by Matthias on 24.10.2015.
@@ -6,8 +13,10 @@ import javax.vecmath.Vector2d;
  * General super class for all active units in the game.
  * Be they the players, mobile npcs or static towers.
  *
+ *
+ * TODO: Should extend NetworkEntity
  */
-public abstract class Unit extends NetworkEntity {
+public abstract class Unit extends Entity {
 
     private boolean alive;
 
@@ -25,7 +34,8 @@ public abstract class Unit extends NetworkEntity {
     private Entity weapon;
 
 
-    public Unit(Vector2d spawnPos, float spawnDirection, Materials[] sockets) {
+    public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
+        super("foundation.png", spawnPos, spawnDirection, 101);
 
         this.speed = 0;
         this.maxSpeed = 0;
@@ -39,14 +49,14 @@ public abstract class Unit extends NetworkEntity {
         // values NOT final
         for (int i = 0; i < sockets.length; i++) {
             switch(sockets[i]) {
-                case Wheels:
+                case WHEELS:
                     this.maxSpeed += 1;
                     break;
-                case Armour:
+                case ARMOUR:
                     this.health *= 2;
                     ++healthNum;
                     break;
-                case Weapon:
+                case WEAPON:
                     this.strength *= 2;
                     ++strengthNum;
                     break;
@@ -55,28 +65,23 @@ public abstract class Unit extends NetworkEntity {
             }
         }
 
-        // Choose gfx for base
-        String baseImg;
         if (maxSpeed > 0) {
-            baseImg = "wheels.png";
-        }
-        else {
-            baseImg = "foundation.png";
+            this.setImage("wheels.png");
         }
 
-        super(baseImg, spawnPos, spawnDirection);
+
 
         // Choose gfx for armourBase and -Tower
         String armourBaseImg = "armourBase" + healthNum + ".png";
         String armourTowerImg = "armourTower" + healthNum + ".png";
 
-        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection);
-        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection);
+        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection, 102);
+        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection, 103);
 
         // Choose gfx for weapon
         String weaponImg = "weapon" + strengthNum + ".png";
 
-        weapon = new Entity(weaponImg, spawnPos, spawnDirection);
+        weapon = new Entity(weaponImg, spawnPos, spawnDirection, 104);
 
 }
 
@@ -107,7 +112,7 @@ public abstract class Unit extends NetworkEntity {
             this.speed = this.maxSpeed;
         }
 
-        float newDirection = this.getDirection();
+        float newDirection = this.getRotation();
         if (changeDirection == -1) {
             // by pi/40
             this.speed -= 0.02 * this.maxSpeed;
@@ -117,27 +122,27 @@ public abstract class Unit extends NetworkEntity {
             this.speed -= 0.02 * this.maxSpeed;
             newDirection += Math.PI * 0.025;
         }
-        this.setDirection(newDirection);
+        this.setRotation(newDirection);
 
         double newX = this.getPosition().getX() + Math.cos(newDirection) * this.speed;
         double newY = this.getPosition().getX() + Math.sin(newDirection) * this.speed;
-        this.setPosition(new Vector2d(newX, newY));
+        this.setPosition(new Point2d(newX, newY));
     }
 
     @Override
-    public void setPosition(Vector2d position){
+    public void setPosition(Point2d position){
         super.setPosition(position);
         armourBase.setPosition(position);
         armourTower.setPosition(position);
         weapon.setPosition(position);
     }
 
-    public void shoot(){
-        Projectile bullet = new Projectile(this.getPosition(), this.getDirection());
+    public void shoot() throws SlickException {
+        Projectile bullet = new Projectile(this.getPosition(), this.getRotation(), (float) this.strength);
          //TODO: register projectiles for Collision Detection
     }
 
-    public void aim(Vector2d targetPos){
+    public void aim(Point2d targetPos){
         double x = targetPos.getX() - this.getPosition().getX();
         double y = targetPos.getY() - this.getPosition().getY();
 
