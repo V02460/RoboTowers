@@ -13,13 +13,6 @@ import robo.map.TileType;
 
 public class EntityList {
 	private static Map<Integer, List<Entity>> entities = new HashMap<>();
-	int xwindow;
-	int ywindow;
-	
-	public void SetWindowSize(int x, int y) {
-		xwindow=x;
-		ywindow=y;		
-	}
 	
 	
 	public void addEntity(Entity e) {
@@ -39,15 +32,15 @@ public class EntityList {
 	}
 	
 	
-	public void drawEntities(double x_off, double y_off) {
+	public void drawEntities(Camera camera) {
 		for (List<Entity> l : entities.values()) {
 			for (Entity e : l) {
 				// Move By Offset an Center in Window
-				double x=e.getPosition().x-x_off+xwindow/2;
-				double y=e.getPosition().y-y_off+ywindow/2;				
+				double x=e.getPosition().x-camera.getX()+camera.getWidth()/2;
+				double y=e.getPosition().y-camera.getY()+camera.getHeight()/2;				
 				// Check whether Image is inside Window			
-				if(x+e.getImage().getWidth()>=0 && x-e.getImage().getWidth()<=xwindow){
-					if(y+e.getImage().getHeight()>=0 && y-e.getImage().getHeight()<=ywindow){
+				if(x+e.getImage().getWidth()>=0 && x-e.getImage().getWidth()<=camera.getWidth()){
+					if(y+e.getImage().getHeight()>=0 && y-e.getImage().getHeight()<=camera.getHeight()){
 						// Draw Entity
 						e.getImage().drawCentered((float) x,(float) y);
 					}
