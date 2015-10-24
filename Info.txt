@@ -1,0 +1,7 @@
+== Build ==
+
+javac -cp .:slick/lib/\*:lwjgl/jar/\* RoboTowers.java -d bin
+
+== Run ==
+
+java -cp ./bin:slick/lib/\*:lwjgl/jar/\* -Djava.library.path=slick RoboTowers
