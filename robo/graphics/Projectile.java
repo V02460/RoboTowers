@@ -1,6 +1,8 @@
 package robo.graphics;
 
 import org.newdawn.slick.SlickException;
+
+import robo.collision.CollisionTest;
 import robo.network.NetworkEntity;
 import robo.network.Type;
 
@@ -20,6 +22,7 @@ public class Projectile extends NetworkEntity {
     public Projectile(Point2d spawnPosition, float spawnDirection, float spawnPower) throws SlickException{
         super("projectile.png", spawnPosition, spawnDirection, 101, Type.BULLET, new byte[0], true);
 
+        CollisionTest.addBullet(this);
         this.power = spawnPower;
     }
 
@@ -33,5 +36,11 @@ public class Projectile extends NetworkEntity {
 
     public float getPower() {
         return this.power;
+    }
+
+    @Override
+    public void delete() {
+    	super.delete();
+    	CollisionTest.deleteBullet(this);
     }
 }
