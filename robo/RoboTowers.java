@@ -28,7 +28,6 @@ import robo.graphics.Camera;
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
-	EntityList entitylist;
 	Sounds soundlist; 
 	Camera camera;
 
@@ -47,7 +46,6 @@ public class RoboTowers extends BasicGame {
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
 		player = new Unit(new Point2d(map.getPlayer1X()*32 + 16, map.getPlayer1Y()*32 + 16), 0, ms);
-		entitylist = new EntityList();
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
