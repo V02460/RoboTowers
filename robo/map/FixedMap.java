@@ -33,4 +33,24 @@ public class FixedMap extends Map {
 		tiles[7][2] = TileType.TowerSlot;
 		tiles[7][7] = TileType.TowerSlot;
 	}
+
+	@Override
+	public int getPlayer1X() {
+		return 1;
+	}
+
+	@Override
+	public int getPlayer1Y() {
+		return 1;
+	}
+
+	@Override
+	public int getPlayer2X() {
+		return 1;
+	}
+
+	@Override
+	public int getPlayer2Y() {
+		return 1;
+	}
 }
