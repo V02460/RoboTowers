@@ -26,7 +26,6 @@ public class RoboTowers extends BasicGame
 {
 	private Map map;
 	private Unit player;
-	EntityList entitylist;
 	Camera camera;
 	
 
@@ -47,9 +46,7 @@ public class RoboTowers extends BasicGame
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
 		player = new Unit(new Point2d(100, 100), 0, ms);
-		entitylist = new EntityList();
-		entitylist.insertMap(map);
-		entitylist.addEntity(player);
+		EntityList.insertMap(map);
 
 		in = new Input(gc.getHeight());
 
@@ -69,7 +66,7 @@ public class RoboTowers extends BasicGame
 
 		// ne.sendFrameUpdate();
 		player.update();
-		camera.setPosition(player.getPosition().getX(), player.getPosition().getY());
+		camera.setPosition(player.getPosition().x, player.getPosition().y);
 		FrameCounter.frameNumber++;
 	}
 /*
@@ -145,7 +142,7 @@ public class RoboTowers extends BasicGame
 		//g.drawString("Howdy!", 10, 10);
 		// Camera Auto-Moving
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
-		entitylist.drawEntities(camera);
+		EntityList.drawEntities(camera);
 		
 		
 		
