@@ -90,7 +90,7 @@ public class RoboTowers extends BasicGame
 	public void keyPressed(int key, char c) {
 		switch (key) {
 		case Input.KEY_W:
-			player.setChangeSpeed(1);		
+			player.setChangeSpeed(1);
 			break;
 		case Input.KEY_A:
 			player.setChangeDirection(-1);
