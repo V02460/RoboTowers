@@ -44,8 +44,7 @@ public class RoboTowers extends BasicGame {
 		
 		
 		map = new SimpleLayerMap(150, 150);
-		Materials[] ms = new Materials[1];
-		ms[0] = Materials.WHEELS;
+		Materials[] ms = createRandomLoadOut();
 		player = new Unit(new Point2d(100, 100), 0, ms);
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
@@ -61,6 +60,19 @@ public class RoboTowers extends BasicGame {
 		// ne.setDeletionCallback();
 		// ne.setUpdateCallback();
 		// ne.setHitCallback();
+	}
+
+
+	// FIXME: This should be only temporary
+	private Materials[] createRandomLoadOut() {
+		Materials[] mats = new Materials[7];
+		mats[0] = Materials.WHEELS;
+
+		for (int i = 1; i < mats.length; i++) {
+			mats[i] = Materials.randomMaterial();
+		}
+
+		return mats;
 	}
 
 	@Override
