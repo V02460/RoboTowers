@@ -26,6 +26,8 @@ import robo.sounds.Sounds;
 import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame {
+	public static final int TILE_SIZE = 50;
+
 	private Map map;
 	private Unit player;
 	Sounds soundlist; 
@@ -45,7 +47,7 @@ public class RoboTowers extends BasicGame {
 		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
-		player = new Unit(new Point2d(map.getPlayer1X()*32 + 16, map.getPlayer1Y()*32 + 16), 0, ms);
+		player = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), 0, ms);
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
