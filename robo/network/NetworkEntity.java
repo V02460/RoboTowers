@@ -25,7 +25,6 @@ public class NetworkEntity extends Entity
 		super(imagePath, position, rotation, layer);
 
 		this.doUpdates = doUpdates;
-		
 		ne.createEntity(type, params);
 	}
 
