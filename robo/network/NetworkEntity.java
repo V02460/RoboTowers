@@ -5,6 +5,7 @@ import javax.vecmath.Point2d;
 
 import robo.graphics.Entity;
 import robo.FrameCounter;
+import robo.graphics.EntityUpdateList;
 
 public class NetworkEntity extends Entity
 {
@@ -25,6 +26,9 @@ public class NetworkEntity extends Entity
 		super(imagePath, position, rotation, layer);
 
 		this.doUpdates = doUpdates;
+		if (doUpdates) {
+			EntityUpdateList.addEntity(this);
+		}
 		ne.createEntity(type, params);
 	}
 
@@ -47,6 +51,8 @@ public class NetworkEntity extends Entity
 
 		dirtyFrame = FrameCounter.getFrameCount();
 	}
+
+	public void update() throws SlickException{}
 
 	// 1. Send UDP pos, rotation
 	// 2. Send TCP creation, shots, hits

@@ -18,7 +18,7 @@ public class Projectile extends NetworkEntity {
     private float power;
 
     public Projectile(Point2d spawnPosition, float spawnDirection, float spawnPower) throws SlickException{
-        super("projectile.png", spawnPosition, spawnDirection, 201, Type.BULLET, new byte[0], true);
+        super("projectile.png", spawnPosition, spawnDirection, 101, Type.BULLET, new byte[0], true);
 
         this.power = spawnPower;
     }
@@ -26,8 +26,8 @@ public class Projectile extends NetworkEntity {
     public void update() {
 
         float direction = this.getRotation();
-        double newX = this.getPosition().getX() + Math.cos(direction) * this.speed;
-        double newY = this.getPosition().getX() + Math.sin(direction) * this.speed;
+        double newX = this.getPosition().x + Math.cos(direction) * this.speed;
+        double newY = this.getPosition().y + Math.sin(direction) * this.speed;
         this.setPosition(new Point2d(newX, newY));
     }
 
