@@ -2,23 +2,22 @@ package robo.graphics;
 
 import javax.vecmath.Point2d;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
 
 public class Entity {
 	private Point2d position;
 	private float rotation;
-	private Image image;
+	private String image;
 	private int layer;
-	private int ID;
 	
-	public Entity(String path, Point2d p, float r, int l) throws SlickException {
+	public Entity(String path, Point2d p, float r, int l) {
 		setPosition(p);
 		setRotation(r);
 		setLayer(l);
-		image = new Image(path); // Should take care to open each image only once for all tiles
+		image = "robo/res/gfx/" + path;
 	}
+	
+	
 	
 	public Point2d getPosition() {
 		return position;
@@ -44,12 +43,12 @@ public class Entity {
 		rotation=r;
 	}
 	
-	public Image getImage() {
+	public String getImageString() {
 		return image;
 	}
 
-	public void setImage(String path) throws SlickException {
-		image = new Image(path);
+	public void setImageString(String path){
+		image = "robo/res/gfx/" + path;
 	}
 	
 }

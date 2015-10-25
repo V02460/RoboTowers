@@ -35,7 +35,7 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map = new SimpleLayerMap(200, 200);
+		map = new SimpleLayerMap(150, 150);
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		
@@ -67,7 +67,7 @@ public class RoboTowers extends BasicGame
 	{
 		//g.drawString("Howdy!", 10, 10);
 		// Camera Auto-Moving
-		// camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
+		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
 		entitylist.drawEntities(camera);
 		
 		
