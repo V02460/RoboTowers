@@ -24,7 +24,6 @@ public class Camera {
 		height=y;
 	}
 
-	
 	public int getWidth() {
 		return width;
 	}

@@ -4,41 +4,42 @@ import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.vecmath.Point2d;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import javax.vecmath.Point2d;
-
-import robo.network.NetworkEnviroment;
-import robo.network.NetworkEntity;
-import robo.map.Map;
-import robo.map.SimpleLayerMap;
 import robo.collision.CollisionTest;
+import robo.graphics.Camera;
 import robo.graphics.EntityList;
 import robo.graphics.EntityUpdateList;
 import robo.graphics.Materials;
 import robo.graphics.Unit;
-import robo.network.Type;
+import robo.map.Map;
+import robo.map.SimpleLayerMap;
+import robo.network.NetworkEntity;
+import robo.network.NetworkEnviroment;
 import robo.sounds.Sounds;
-import robo.graphics.Camera;
 
-public class RoboTowers extends BasicGame {
+public class SplitScreen extends BasicGame {
 	public static final int TILE_SIZE = 50;
 
 	private Map map;
-	private Unit player;
+	private Unit player1;
+	private Unit player2;
 	Sounds soundlist;
-	Camera camera;
+	Camera camera1;
+	Camera camera2;
 
 	private NetworkEnviroment ne;
 	private Input in;
 	
-	public RoboTowers(String gamename) {
+	public SplitScreen(String gamename) {
 		super(gamename);
 	}
 
@@ -47,17 +48,16 @@ public class RoboTowers extends BasicGame {
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
-		map = new SimpleLayerMap(50, 50);
+		map = new SimpleLayerMap(30, 30);
 		Materials[] ms = createRandomLoadOut();
-		player = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), (float) 0, ms);
+		player1 = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), (float) 0, ms);
+		player2 = new Unit(new Point2d((map.getPlayer2X()+0.5)*TILE_SIZE, (map.getPlayer2Y()+0.5)*TILE_SIZE), (float) 0, ms);
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
 		soundlist.playSound("RoboTowers.mp3");
 
 		in = new Input(gc.getHeight());
-
-		new NetworkEntity("projectile.png", new Point2d(10, 3), 3.2f, 5, Type.BULLET, new byte[0], true);
 
 		// ne.setCreationCallback();
 		// ne.setDeletionCallback();
@@ -87,7 +87,8 @@ public class RoboTowers extends BasicGame {
 		// ne.sendFrameUpdate();
 		CollisionTest.checkColisions();
 		EntityUpdateList.updateEntities();
-		camera.setPosition(player.getPosition().x, player.getPosition().y);
+		camera1.setPosition(player1.getPosition().x, player1.getPosition().y);
+		camera2.setPosition(player2.getPosition().x, player2.getPosition().y);
 		FrameCounter.frameNumber++;
 	}
 
@@ -97,7 +98,9 @@ public class RoboTowers extends BasicGame {
 		//g.drawString("Howdy!", 10, 10);
 		// Camera Auto-Moving
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
-		//EntityList.drawEntities(camera);
+		EntityList.drawEntities(camera1,1);
+		EntityList.drawEntities(camera2,2);
+		// TODO research here
 
 		g.setColor(new Color(100,150,100,220));
 		g.fillRoundRect(6, 40, 90, 90, 6);
@@ -106,45 +109,60 @@ public class RoboTowers extends BasicGame {
 		DecimalFormat df0 = new DecimalFormat( "##0" );
 		DecimalFormat df1 = new DecimalFormat("##0.0");
 
-		String hp = "HP: " + df0.format(player.getHealth());
+		// TODO for player 2
+
+		String hp = "HP: " + df0.format(player1.getHealth());
 		g.drawString(hp, 10, 50);
-		String dmg = "DMG: " + df0.format(player.getStrength());
+		String dmg = "DMG: " + df0.format(player1.getStrength());
 		g.drawString(dmg, 10, 70);
-		String speed = "SPD: " + df1.format(player.getSpeed());
+		String speed = "SPD: " + df1.format(player1.getSpeed());
 		g.drawString(speed, 10, 90);
 	}
 
+	// TODO few next for player 2
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		player.giveShootOrder();
+		player1.giveShootOrder();
 	}
 
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		int diffX = newx - camera.getWidth()/2;
-		int diffY = newy - camera.getHeight()/2;
+		int diffX = newx - camera1.getWidth()/2;
+		int diffY = newy - camera1.getHeight()/2;
 
-		player.aim(diffX, diffY);
+		player1.aim(diffX, diffY);
+		diffX = newx - camera2.getWidth()/2;
+		diffY = newy - camera2.getHeight()/2;
+
+		player2.aim(diffX, diffY);
 	}
 
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
 			case Input.KEY_W:
-			case Input.KEY_UP:
-				player.setChangeSpeed(1);
+				player1.setChangeSpeed(1);
 				break;
 			case Input.KEY_A:
-			case Input.KEY_LEFT:
-				player.setChangeDirection(-1);
+				player1.setChangeDirection(-1);
 				break;
 			case Input.KEY_S:
-			case Input.KEY_DOWN:
-				player.setChangeSpeed(-1);
+				player1.setChangeSpeed(-1);
 				break;
 			case Input.KEY_D:
+				player1.setChangeDirection(1);
+				break;
+			case Input.KEY_UP:
+				player2.setChangeSpeed(1);
+				break;
+			case Input.KEY_LEFT:
+				player2.setChangeDirection(-1);
+				break;
+			case Input.KEY_DOWN:
+				player2.setChangeSpeed(-1);
+				break;
 			case Input.KEY_RIGHT:
-				player.setChangeDirection(1);
+				player2.setChangeDirection(1);
 				break;
 		}
 	}
@@ -153,47 +171,76 @@ public class RoboTowers extends BasicGame {
 	public void keyReleased(int key, char c) {
 		switch (key) {
 			case Input.KEY_W:
-			case Input.KEY_UP:
-				if (in.isKeyDown(Input.KEY_S) || in.isKeyDown(Input.KEY_DOWN)) {
-					player.setChangeSpeed(-1);
+				if (in.isKeyDown(Input.KEY_S)) {
+					player1.setChangeSpeed(-1);
 				} else {
-					player.setChangeSpeed(0);
+					player1.setChangeSpeed(0);
 				}
 				break;
 			case Input.KEY_A:
-			case Input.KEY_LEFT:
-				if (in.isKeyDown(Input.KEY_D) || in.isKeyDown(Input.KEY_RIGHT)) {
-					player.setChangeDirection(1);
+				if (in.isKeyDown(Input.KEY_D)) {
+					player1.setChangeDirection(1);
 				} else {
-					player.setChangeDirection(0);
+					player1.setChangeDirection(0);
 				}
 				break;
 			case Input.KEY_S:
-			case Input.KEY_DOWN:
-				if (in.isKeyDown(Input.KEY_W) || in.isKeyDown(Input.KEY_UP)) {
-					player.setChangeSpeed(1);
+				if (in.isKeyDown(Input.KEY_W)) {
+					player1.setChangeSpeed(1);
 				} else {
-					player.setChangeSpeed(0);
+					player1.setChangeSpeed(0);
 				}
 				break;
 			case Input.KEY_D:
-			case Input.KEY_RIGHT:
-				if (in.isKeyDown(Input.KEY_A) || in.isKeyDown(Input.KEY_LEFT)) {
-					player.setChangeDirection(-1);
+				if (in.isKeyDown(Input.KEY_A)) {
+					player1.setChangeDirection(-1);
 				} else {
-					player.setChangeDirection(0);
+					player1.setChangeDirection(0);
+				}
+				break;			
+		
+			case Input.KEY_UP:
+				if (in.isKeyDown(Input.KEY_DOWN)) {
+					player2.setChangeSpeed(-1);
+				} else {
+					player2.setChangeSpeed(0);
+			}
+				break;
+			case Input.KEY_LEFT:
+				if (in.isKeyDown(Input.KEY_RIGHT)) {
+					player2.setChangeDirection(1);
+				} else {
+					player2.setChangeDirection(0);
 				}
 				break;
+			case Input.KEY_DOWN:
+				if (in.isKeyDown(Input.KEY_UP)) {
+					player2.setChangeSpeed(1);
+				} else {
+					player2.setChangeSpeed(0);
+				}
+				break;
+			case Input.KEY_RIGHT:
+				if (in.isKeyDown(Input.KEY_LEFT)) {
+					player2.setChangeDirection(-1);
+				} else {
+					player2.setChangeDirection(0);
+				}
+				break;
+				
 		}
 		
 	}
 
 	public static void main(String[] args) {
-		RoboTowers rt=new RoboTowers("RoboTowers Epicness!!!1111einself");
+		SplitScreen rt=new SplitScreen("Last Minute Hacks FTW");
 		System.out.println("Hello RoboTowers");
-		rt.camera=new Camera();
-		rt.camera.setPosition(0,0);
-		rt.camera.setWindow(800,600);
+		rt.camera1 = new Camera();
+		rt.camera2 = new Camera();
+		rt.camera1.setPosition(0,0);
+		rt.camera2.setPosition(0,0);
+		rt.camera1.setWindow(12*TILE_SIZE,12*TILE_SIZE);
+		rt.camera2.setWindow(12*TILE_SIZE,12*TILE_SIZE);
 
 		try {
 			AppGameContainer appgc;
@@ -201,8 +248,8 @@ public class RoboTowers extends BasicGame {
 
 			appgc.setMinimumLogicUpdateInterval(20);
 			appgc.setMaximumLogicUpdateInterval(20);
-			
-			appgc.setDisplayMode(rt.camera.getWidth(), rt.camera.getHeight(), false);
+
+			appgc.setDisplayMode(rt.camera1.getWidth()*2, rt.camera1.getHeight(), false);
 			appgc.start();
 		} catch (SlickException ex) {
 			Logger.getLogger(RoboTowers.class.getName()).log(Level.SEVERE, null, ex);

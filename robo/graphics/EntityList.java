@@ -34,15 +34,15 @@ public class EntityList {
 		}		
 	}
 
-	public static void drawEntities(Camera camera) throws SlickException {
+	public static void drawEntities(Camera camera, int player) throws SlickException {
 		for (List<Entity> l : entities.values()) {
 			for (Entity e : l) {
 				// Move By Offset an Center in Window
-				double x=e.getPosition().x-camera.getX()+camera.getWidth()/2;
+				double x=e.getPosition().x-camera.getX()+camera.getWidth()/2+(player-1)*camera.getWidth();
 				double y=e.getPosition().y-camera.getY()+camera.getHeight()/2;
 				Image image=images.getImage(e.getImageString());
 				// Check whether Image is inside Window			
-				if(x+image.getWidth()>=0 && x-image.getWidth()<=camera.getWidth()){
+				if(x+image.getWidth()>=0+(player-1)*camera.getWidth() && x-image.getWidth()<=camera.getWidth()+(player-1)*camera.getWidth()){
 					if(y+image.getHeight()>=0 && y-image.getHeight()<=camera.getHeight()){
 						// Draw Entity					
 						image.setRotation((float) (e.getRotation()*360/(2.0*Math.PI)));
@@ -52,7 +52,6 @@ public class EntityList {
 			}
 		}
 	}
-
 
 	// Transform map into entities
 	public static void insertMap(robo.map.Map map) throws SlickException {
