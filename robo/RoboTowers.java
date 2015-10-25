@@ -1,5 +1,6 @@
 package robo;
 
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,6 +8,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -96,6 +98,20 @@ public class RoboTowers extends BasicGame {
 		// Camera Auto-Moving
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
 		EntityList.drawEntities(camera);
+
+		g.setColor(new Color(100,150,100,220));
+		g.fillRoundRect(6, 40, 90, 90, 6);
+		g.setColor(Color.white);
+
+		DecimalFormat df0 = new DecimalFormat( "##0" );
+		DecimalFormat df1 = new DecimalFormat("##0.0");
+
+		String hp = "HP: " + df0.format(player.getHealth());
+		g.drawString(hp, 10, 50);
+		String dmg = "DMG: " + df0.format(player.getStrength());
+		g.drawString(dmg, 10, 70);
+		String speed = "SPD: " + df1.format(player.getSpeed());
+		g.drawString(speed, 10, 90);
 	}
 
 	@Override
