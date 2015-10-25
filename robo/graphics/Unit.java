@@ -64,7 +64,7 @@ public abstract class Unit extends NetworkEntity {
         }
 
         if (maxSpeed > 0) {
-            this.setImage("wheels.png");
+            this.setImageString("wheels.png");
         }
 
 

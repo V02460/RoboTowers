@@ -7,19 +7,14 @@ import java.util.LinkedList;
 import javax.vecmath.Point2d;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Image;
 import robo.map.TileType;
 
 
 
 public class EntityList {
 	private static Map<Integer, List<Entity>> entities = new HashMap<>();
-	int xwindow;
-	int ywindow;
-	
-	public void SetWindowSize(int x, int y) {
-		xwindow=x;
-		ywindow=y;		
-	}
+	Images images = new Images();
 	
 	
 	public void addEntity(Entity e) {
@@ -39,17 +34,18 @@ public class EntityList {
 	}
 	
 	
-	public void drawEntities(double x_off, double y_off) {
+	public void drawEntities(Camera camera) throws SlickException {
 		for (List<Entity> l : entities.values()) {
 			for (Entity e : l) {
 				// Move By Offset an Center in Window
-				double x=e.getPosition().x-x_off+xwindow/2;
-				double y=e.getPosition().y-y_off+ywindow/2;				
+				double x=e.getPosition().x-camera.getX()+camera.getWidth()/2;
+				double y=e.getPosition().y-camera.getY()+camera.getHeight()/2;
+				Image image=images.getImage(e.getImageString());
 				// Check whether Image is inside Window			
-				if(x+e.getImage().getWidth()>=0 && x-e.getImage().getWidth()<=xwindow){
-					if(y+e.getImage().getHeight()>=0 && y-e.getImage().getHeight()<=ywindow){
+				if(x+image.getWidth()>=0 && x-image.getWidth()<=camera.getWidth()){
+					if(y+image.getHeight()>=0 && y-image.getHeight()<=camera.getHeight()){
 						// Draw Entity
-						e.getImage().drawCentered((float) x,(float) y);
+						image.drawCentered((float) x,(float) y);
 					}
 				}
 			}
@@ -66,11 +62,11 @@ public class EntityList {
 				
 				// chose Image
 				if(map.get(x,y)==TileType.Wall){
-					image_path="robo/res/gfx/wall.png";
+					image_path="wall.png";
 				} else if(map.get(x,y)==TileType.PlayerSpawn){
-					image_path="robo/res/gfx/player.png";
+					image_path="player.png";
 				} else {
-					image_path="robo/res/gfx/floor.png";
+					image_path="floor.png";
 				}
 				// Define Image and Position and push to entity-list
 				// Image size assumed to be 32x32
