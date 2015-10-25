@@ -79,52 +79,60 @@ public class RoboTowers extends BasicGame
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
-		case Input.KEY_W:
-			player.setChangeSpeed(1);
-			break;
-		case Input.KEY_A:
-			player.setChangeDirection(-1);
-			break;
-		case Input.KEY_S:
-			player.setChangeSpeed(-1);
-			break;
-		case Input.KEY_D:
-			player.setChangeDirection(1);
-			break;
+			case Input.KEY_W:
+			case Input.KEY_UP:
+				player.setChangeSpeed(1);
+				break;
+			case Input.KEY_A:
+			case Input.KEY_LEFT:
+				player.setChangeDirection(-1);
+				break;
+			case Input.KEY_S:
+			case Input.KEY_DOWN:
+				player.setChangeSpeed(-1);
+				break;
+			case Input.KEY_D:
+			case Input.KEY_RIGHT:
+				player.setChangeDirection(1);
+				break;
 		}
 	}
 
 	@Override
 	public void keyReleased(int key, char c) {
 		switch (key) {
-		case Input.KEY_W:
-			if (in.isKeyDown(Input.KEY_S)) {
-				player.setChangeSpeed(-1);
-			} else {
-				player.setChangeSpeed(0);
-			}
-			break;
-		case Input.KEY_A:
-			if (in.isKeyDown(Input.KEY_D)) {
-				player.setChangeDirection(1);
-			} else {
-				player.setChangeDirection(0);
-			}
-			break;
-		case Input.KEY_S:
-			if (in.isKeyDown(Input.KEY_W)) {
-				player.setChangeSpeed(1);
-			} else {
-				player.setChangeSpeed(0);
-			}
-			break;
-		case Input.KEY_D:
-			if (in.isKeyDown(Input.KEY_A)) {
-				player.setChangeDirection(-1);
-			} else {
-				player.setChangeDirection(0);
-			}
-			break;
+			case Input.KEY_W:
+			case Input.KEY_UP:
+				if (in.isKeyDown(Input.KEY_S)) {
+					player.setChangeSpeed(-1);
+				} else {
+					player.setChangeSpeed(0);
+				}
+				break;
+			case Input.KEY_A:
+			case Input.KEY_LEFT:
+				if (in.isKeyDown(Input.KEY_D)) {
+					player.setChangeDirection(1);
+				} else {
+					player.setChangeDirection(0);
+				}
+				break;
+			case Input.KEY_S:
+			case Input.KEY_DOWN:
+				if (in.isKeyDown(Input.KEY_W)) {
+					player.setChangeSpeed(1);
+				} else {
+					player.setChangeSpeed(0);
+				}
+				break;
+			case Input.KEY_D:
+			case Input.KEY_RIGHT:
+				if (in.isKeyDown(Input.KEY_A)) {
+					player.setChangeDirection(-1);
+				} else {
+					player.setChangeDirection(0);
+				}
+				break;
 		}
 	}
 
