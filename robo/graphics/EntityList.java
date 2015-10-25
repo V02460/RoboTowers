@@ -14,10 +14,10 @@ import robo.map.TileType;
 
 public class EntityList {
 	private static Map<Integer, List<Entity>> entities = new HashMap<>();
-	Images images = new Images();
+	private static Images images = new Images();
 	
 	
-	public void addEntity(Entity e) {
+	public static void addEntity(Entity e) {
 		if (entities.containsKey(e.getLayer())) {
 			entities.get(e.getLayer()).add(e);
 		} else {
@@ -27,14 +27,13 @@ public class EntityList {
 		}
 	}
 
-	public void deleteEntity(Entity e) {
+	public static void deleteEntity(Entity e) {
 		if(entities.containsKey(e.getLayer())) {
 			entities.get(e.getLayer()).remove(e);
 		}		
 	}
-	
-	
-	public void drawEntities(Camera camera) throws SlickException {
+
+	public static void drawEntities(Camera camera) throws SlickException {
 		for (List<Entity> l : entities.values()) {
 			for (Entity e : l) {
 				// Move By Offset an Center in Window
@@ -52,10 +51,10 @@ public class EntityList {
 			}
 		}
 	}
-	
-	
+
+
 	// Transform map into entities
-	public void insertMap(robo.map.Map map) throws SlickException {
+	public static void insertMap(robo.map.Map map) throws SlickException {
 		for ( int x = 0; x < map.getWidth(); x++ ) {
 			for ( int y = 0; y < map.getHeight(); y++ ) {
 				String image_path;
@@ -72,8 +71,6 @@ public class EntityList {
 				// Define Image and Position and push to entity-list
 				// Image size assumed to be 32x32
 				e=new Entity(image_path, new Point2d(x*32+16, y*32+16), 0, 0);
-				addEntity(e);
-			
 			}
 		}
 	}
