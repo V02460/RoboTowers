@@ -1,6 +1,8 @@
 package robo.graphics;
 
 import org.newdawn.slick.SlickException;
+
+import robo.collision.CollisionTest;
 import robo.network.NetworkEntity;
 import robo.network.Type;
 
@@ -41,6 +43,8 @@ public class Unit extends NetworkEntity {
 
         this.alive = true;
         this.doShoot = false;
+
+        CollisionTest.addUnit(this);
 
         this.speed = 0;
         this.maxSpeed = 0;
@@ -93,30 +97,36 @@ public class Unit extends NetworkEntity {
     }
 
     public void update() throws SlickException{
+        double acceleration;
         if (changeSpeed == -1) {
-            this.speed -= 0.1*this.maxSpeed;
+            acceleration = -Math.pow(this.speed, 2)/10;
+            //this.speed -= 0.1*this.maxSpeed;
         }
         else if (changeSpeed == 1) {
-            this.speed += 0.1*this.maxSpeed;
+            acceleration  = Math.pow(this.maxSpeed - this.speed, 2)/10;
+            //this.speed += 0.1*this.maxSpeed;
         }
         else {
-            this.speed -= 0.01*this.maxSpeed;
+            acceleration = -Math.pow(this.speed, 2)/100;
+            //this.speed -= 0.01*this.maxSpeed;
         }
 
 
         float newDirection = this.getRotation();
         if (changeDirection == -1) {
-            // by pi/40
-            this.speed -= 0.1 * this.maxSpeed;
+            acceleration -= this.speed/20;
+            //this.speed -= 0.1 * this.maxSpeed;
             newDirection -= Math.PI * 0.0125;
         }
         else if (changeDirection == 1) {
-            this.speed -= 0.1 * this.maxSpeed;
+            acceleration -= this.speed/20;
+            //this.speed -= 0.1 * this.maxSpeed;
             newDirection += Math.PI * 0.0125;
         }
+        this.speed += acceleration;
         this.setRotation(newDirection);
 
-        if (this.speed < 0) {
+        if (this.speed < 0 || this.speed < 0.2 && acceleration < 0) {
             this.speed = 0;
         }
         else if (this.speed > this.maxSpeed) {
@@ -185,5 +195,16 @@ public class Unit extends NetworkEntity {
 
     public void setChangeDirection(int cd) {
     	changeDirection = cd;
+    }
+
+    public void instantStop() {
+    	speed = 0;
+    	changeSpeed = 0;
+    }
+
+    @Override
+    public void delete() {
+    	super.delete();
+    	CollisionTest.deleteUnit(this);
     }
 }
