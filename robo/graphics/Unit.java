@@ -128,8 +128,7 @@ public class Unit extends NetworkEntity {
         this.setPosition(new Point2d(newX, newY));
 
         if (doShoot) {
-
-            this.shoot();
+            new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
             doShoot = false;
         }
     }
@@ -150,10 +149,6 @@ public class Unit extends NetworkEntity {
         weapon.setRotation((float)this.aimDirection);
     }
 
-    public void shoot() throws SlickException {
-        Projectile bullet = new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
-         //TODO: register projectiles for Collision Detection
-    }
 
     public void aim(int diffX, int diffY){
 

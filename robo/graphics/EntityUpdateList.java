@@ -38,7 +38,11 @@ public class EntityUpdateList {
     }
 
     public static void updateEntities() {
-        for (List<NetworkEntity> l : entities.values()) {
+        Map<Integer, List<NetworkEntity>> ents = new HashMap<>();
+        for(Integer l : entities.keySet()) {
+            ents.put(l, entities.get(l));
+        }
+        for (List<NetworkEntity> l : ents.values()) {
             for (NetworkEntity e : l) {
                 try {
                     e.update();
