@@ -20,15 +20,16 @@ import robo.graphics.EntityList;
 import robo.graphics.Materials;
 import robo.graphics.Unit;
 import robo.network.Type;
+import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame
 {
 	private Map map;
 	private Unit player;
 	EntityList entitylist;
-	double x_off;
-	double y_off;
+	Camera camera;
 	
+
 	private NetworkEnviroment ne;
 	private Input in;
 	
@@ -39,18 +40,14 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		map = new SimpleLayerMap(40, 40);
+		map = new SimpleLayerMap(150, 150);
 		player = new Unit(new Point2d(100, 100), 0, new Materials[0]);
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		entitylist.addEntity(player);
 
 		in = new Input(gc.getHeight());
-		// Camera Offset to be moved into Player
-		x_off=0;
-		y_off=0;
-		// Size of the window. To be moved to initialisation.
-		entitylist.SetWindowSize(800,640);
+		
 		
 		// NETWORK STUFF
 		ne = new NetworkEnviroment("localhost");
@@ -137,29 +134,31 @@ public class RoboTowers extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		//g.drawString("Howdy!", 10, 10);
-		entitylist.drawEntities(x_off, y_off);
-		/*
 		// Camera Auto-Moving
-		// x_off+=1.0;
-		// y_off+=1.0;
+		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
+		entitylist.drawEntities(camera);
 		
-		// Draw Stuff
-		entitylist.drawEntities(x_off, y_off);*/
+		
 		
 	}
 
 	public static void main(String[] args)
 	{
+		RoboTowers rt=new RoboTowers("RoboTowers Epicness!!!1111einself");
 		System.out.println("Hello RoboTowers");
+		rt.camera=new Camera();
+		rt.camera.setPosition(0,0);
+		rt.camera.setWindow(800,600);
 
 		try
 		{
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new RoboTowers("RoboTowers Epicness!!!1111einself"));
+			appgc = new AppGameContainer(rt);
 
 			appgc.setMinimumLogicUpdateInterval(20);
 			appgc.setMaximumLogicUpdateInterval(20);
-			appgc.setDisplayMode(1366, 786, false);
+			
+			appgc.setDisplayMode(rt.camera.getWidth(), rt.camera.getHeight(), false);
 			appgc.start();
 		}
 		catch (SlickException ex)
