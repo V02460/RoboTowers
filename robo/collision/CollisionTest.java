@@ -50,10 +50,10 @@ public class CollisionTest {
 			}
 			// Walls vs. Units
 			for (Unit u : units) {
-				double leftX = u.getPosition().x + 22*Math.cos(u.getRotation()) - 11*Math.sin(u.getRotation());
-				double leftY = u.getPosition().y + 22*Math.cos(u.getRotation()) + 11*Math.sin(u.getRotation());
-				double rightX = u.getPosition().x + 22*Math.cos(u.getRotation()) + 11*Math.sin(u.getRotation());
-				double rightY = u.getPosition().y + 22*Math.cos(u.getRotation()) - 11*Math.sin(u.getRotation());
+				double leftX = u.getPosition().x + 22*Math.cos(u.getRotation()) + 11*Math.sin(u.getRotation());
+				double leftY = u.getPosition().y + 22*Math.sin(u.getRotation()) - 11*Math.cos(u.getRotation());
+				double rightX = u.getPosition().x + 22*Math.cos(u.getRotation()) - 11*Math.sin(u.getRotation());
+				double rightY = u.getPosition().y + 22*Math.sin(u.getRotation()) + 11*Math.cos(u.getRotation());
 				Pair<Integer, Integer> leftP = pointToTile(new Point2d(leftX, leftY));
 				Pair<Integer, Integer> rightP = pointToTile(new Point2d(rightX, rightY));
 				if (map.get(leftP.getKey(), leftP.getValue()) == TileType.Wall ||
