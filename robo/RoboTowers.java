@@ -1,5 +1,6 @@
 package robo;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,12 +11,17 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import javafx.util.Pair;
+
 import javax.vecmath.Point2d;
 
 import robo.network.NetworkEnviroment;
 import robo.network.NetworkEntity;
 import robo.map.Map;
 import robo.map.SimpleLayerMap;
+import robo.collision.CollisionTest;
+import robo.collision.CollisionType;
+import robo.graphics.Entity;
 import robo.graphics.EntityList;
 import robo.graphics.Materials;
 import robo.graphics.Unit;
@@ -42,8 +48,9 @@ public class RoboTowers extends BasicGame {
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
-		player = new Unit(new Point2d(100, 100), 0, ms);
+		player = new Unit(new Point2d(400, 400), 0, ms);
 		EntityList.insertMap(map);
+		CollisionTest.setMap(map);
 
 		in = new Input(gc.getHeight());
 
@@ -62,6 +69,7 @@ public class RoboTowers extends BasicGame {
 		// needs: entity array
 
 		// ne.sendFrameUpdate();
+		CollisionTest.checkColisions();
 		player.update();
 		camera.setPosition(player.getPosition().x, player.getPosition().y);
 		FrameCounter.frameNumber++;
