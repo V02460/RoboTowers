@@ -20,6 +20,7 @@ public class Unit extends NetworkEntity {
 
     private boolean alive;
     private boolean doShoot;
+    private int shotCooldown;
 
     // direction angle in radians
     private double aimDirection;
@@ -43,6 +44,7 @@ public class Unit extends NetworkEntity {
 
         this.alive = true;
         this.doShoot = false;
+        this.shotCooldown = 0;
 
         CollisionTest.addUnit(this);
 
@@ -137,7 +139,9 @@ public class Unit extends NetworkEntity {
         double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
         this.setPosition(new Point2d(newX, newY));
 
-        if (doShoot) {
+        --shotCooldown;
+        if (doShoot && shotCooldown <= 0) {
+            shotCooldown = 30;
             Projectile p = new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
             p.update();
             doShoot = false;
@@ -201,6 +205,18 @@ public class Unit extends NetworkEntity {
     public void instantStop() {
     	speed = 0;
     	changeSpeed = 0;
+    }
+
+    public double getStrength() {
+        return this.strength;
+    }
+
+    public double getHealth() {
+        return this.health;
+    }
+
+    public double getSpeed() {
+        return this.speed;
     }
 
     @Override
