@@ -49,12 +49,7 @@ public class RoboTowers extends BasicGame {
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
-<<<<<<< HEAD
 		map = new SimpleLayerMap(50, 50);
-=======
-		
-		map = new SimpleLayerMap(150, 150);
->>>>>>> refs/remotes/origin/master
 		Materials[] ms = createRandomLoadOut();
 		player = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), (float) 0, ms);
 		EntityList.insertMap(map);

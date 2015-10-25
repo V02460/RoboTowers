@@ -183,7 +183,14 @@ public class Unit extends NetworkEntity {
 
             if (health <= 0) {
                 alive = false;
-                //TODO: play Death-Animation
+                delete();
+                this.armourBase.setImageString("armourBase4.png");
+                this.armourTower.setImageString("armourTower4.png");
+                this.weapon.setImageString("weapon4.png");
+                this.speed = 0;
+                this.maxSpeed = 0;
+                this.strength = 0;
+                //TODO: play Death-Animati ona 
             } else {
                 //TODO: play Damage-Animation
             }
@@ -197,6 +204,8 @@ public class Unit extends NetworkEntity {
     }
 
     public void giveShootOrder() {
+    	
+    	
         this.doShoot = true;
     }
 
