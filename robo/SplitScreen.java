@@ -50,8 +50,8 @@ public class SplitScreen extends BasicGame {
 		
 		map = new SimpleLayerMap(30, 30);
 		Materials[] ms = createRandomLoadOut();
-		player1 = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), (float) 0, ms);
-		player2 = new Unit(new Point2d((map.getPlayer2X()+0.5)*TILE_SIZE, (map.getPlayer2Y()+0.5)*TILE_SIZE), (float) 0, ms);
+		player1 = new Unit(new Point2d((map.getPlayer1X()+0.5)*TILE_SIZE, (map.getPlayer1Y()+0.5)*TILE_SIZE), (float) 0.85, ms);
+		player2 = new Unit(new Point2d((map.getPlayer2X()+0.5)*TILE_SIZE, (map.getPlayer2Y()+0.5)*TILE_SIZE), (float) 3.95, ms);
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
@@ -90,6 +90,13 @@ public class SplitScreen extends BasicGame {
 		camera1.setPosition(player1.getPosition().x, player1.getPosition().y);
 		camera2.setPosition(player2.getPosition().x, player2.getPosition().y);
 		FrameCounter.frameNumber++;
+
+		int diffX = (int) player2.getPosition().x- (int) player1.getPosition().x;
+		int diffY = (int) player2.getPosition().y- (int) player1.getPosition().y;
+
+		player1.aim((int)diffX, (int)diffY);
+
+	
 	}
 
 
@@ -130,17 +137,13 @@ public class SplitScreen extends BasicGame {
 	// TODO few next for player 2
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		player1.giveShootOrder();
+		player2.giveShootOrder();
 	}
 
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		int diffX = newx - camera1.getWidth()/2;
+		int diffX = newx - camera1.getWidth()/2-camera1.getWidth();
 		int diffY = newy - camera1.getHeight()/2;
-
-		player1.aim(diffX, diffY);
-		diffX = newx - camera2.getWidth()/2;
-		diffY = newy - camera2.getHeight()/2;
 
 		player2.aim(diffX, diffY);
 	}
@@ -171,6 +174,9 @@ public class SplitScreen extends BasicGame {
 				break;
 			case Input.KEY_RIGHT:
 				player2.setChangeDirection(1);
+				break;
+			case Input.KEY_SPACE:
+				player1.giveShootOrder();
 				break;
 		}
 	}
