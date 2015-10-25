@@ -1,6 +1,5 @@
 package robo;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,8 +10,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import javafx.util.Pair;
-
 import javax.vecmath.Point2d;
 
 import robo.network.NetworkEnviroment;
@@ -20,8 +17,6 @@ import robo.network.NetworkEntity;
 import robo.map.Map;
 import robo.map.SimpleLayerMap;
 import robo.collision.CollisionTest;
-import robo.collision.CollisionType;
-import robo.graphics.Entity;
 import robo.graphics.EntityList;
 import robo.graphics.EntityUpdateList;
 import robo.graphics.Materials;
@@ -33,7 +28,6 @@ import robo.graphics.Camera;
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
-	EntityList entitylist;
 	Sounds soundlist; 
 	Camera camera;
 	
@@ -49,13 +43,9 @@ public class RoboTowers extends BasicGame {
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
-		
-		
-		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
-		player = new Unit(new Point2d(400, 400), 0, ms);
-		entitylist = new EntityList();
+		player = new Unit(new Point2d(100, 100), 0, ms);
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
