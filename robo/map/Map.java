@@ -17,11 +17,16 @@ public abstract class Map {
 	public int getWidth () {
 		return tiles.length;
 	}
+
 	public int getHeight () {
 		return tiles[0].length;    // tiles[0] fuer die leere Map abfangen
 	}
 
-	
+	public abstract int getPlayer1X();
+	public abstract int getPlayer1Y();
+	public abstract int getPlayer2X();
+	public abstract int getPlayer2Y();
+
 	@Override
 	public String toString() {
 		String out = "";
