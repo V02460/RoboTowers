@@ -18,10 +18,14 @@ import robo.network.NetworkEntity;
 import robo.map.Map;
 import robo.map.SimpleLayerMap;
 import robo.network.Type;
+import robo.sounds.Sounds;
+import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
+	EntityList entitylist;
+	Sounds soundlist; 
 	Camera camera;
 	
 	private NetworkEnviroment ne;
@@ -36,11 +40,18 @@ public class RoboTowers extends BasicGame {
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
+		
+		
+		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
 		player = new Unit(new Point2d(100, 100), 0, ms);
-		EntityList.insertMap(map);
+		entitylist = new EntityList();
+		entitylist.insertMap(map);
+		entitylist.addEntity(player);
+		soundlist=new Sounds();
+		soundlist.playSound("RoboTowers.mp3");
 
 		in = new Input(gc.getHeight());
 
@@ -144,6 +155,7 @@ public class RoboTowers extends BasicGame {
 				}
 				break;
 		}
+		
 	}
 
 	public static void main(String[] args) {
