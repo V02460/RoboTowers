@@ -46,7 +46,7 @@ public class EntityList {
 					if(y+image.getHeight()>=0 && y-image.getHeight()<=camera.getHeight()){
 						// Draw Entity					
 						image.setRotation((float) (e.getRotation()*360/(2.0*Math.PI)));
-						image.drawCentered((float) x,(float) y);
+						image.drawCentered((float) ((int) x),(float) ((int) y));
 					}
 				}
 			}
@@ -72,7 +72,7 @@ public class EntityList {
 				}
 				// Define Image and Position and push to entity-list
 				// Image size assumed to be 50x50
-				e=new Entity(image_path, new Point2d(x*50+25, y*50+25), 0, 0);
+				e=new Entity(image_path, new Point2d((2*x+1)*25, (2*y+1)*25), 0, 0);
 			}
 		}
 	}
