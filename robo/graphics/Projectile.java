@@ -26,8 +26,8 @@ public class Projectile extends NetworkEntity {
     public void update() {
 
         float direction = this.getRotation();
-        double newX = this.getPosition().getX() + Math.cos(direction) * this.speed;
-        double newY = this.getPosition().getX() + Math.sin(direction) * this.speed;
+        double newX = this.getPosition().x + Math.cos(direction) * this.speed;
+        double newY = this.getPosition().y + Math.sin(direction) * this.speed;
         this.setPosition(new Point2d(newX, newY));
     }
 
