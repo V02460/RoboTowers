@@ -5,6 +5,7 @@ import org.newdawn.slick.SlickException;
 import robo.collision.CollisionTest;
 import robo.network.NetworkEntity;
 import robo.network.Type;
+import robo.sounds.Sounds;
 
 import javax.vecmath.Point2d;
 
@@ -21,6 +22,7 @@ public class Unit extends NetworkEntity {
     private boolean alive;
     private boolean doShoot;
     private int shotCooldown;
+    Sounds soundlist;
 
     // direction angle in radians
     private double aimDirection;
@@ -41,6 +43,8 @@ public class Unit extends NetworkEntity {
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
         super("foundation.png", spawnPos, spawnDirection, 201, Type.PLAYER, new byte[0], true);
+
+        soundlist=new Sounds();
 
         this.alive = true;
         this.doShoot = false;
@@ -143,6 +147,7 @@ public class Unit extends NetworkEntity {
         if (doShoot && shotCooldown <= 0) {
             shotCooldown = 25;
             Projectile p = new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
+            soundlist.playSound("gun.mp3");
             p.update();
             doShoot = false;
         }
