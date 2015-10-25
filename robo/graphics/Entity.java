@@ -51,6 +51,6 @@ public class Entity {
 	}
 
 	public void delete() {
-		
+		EntityList.deleteEntity(this);
 	}
 }

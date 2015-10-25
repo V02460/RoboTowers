@@ -1,6 +1,8 @@
 package robo.graphics;
 
 import org.newdawn.slick.SlickException;
+
+import robo.collision.CollisionTest;
 import robo.network.NetworkEntity;
 import robo.network.Type;
 
@@ -37,6 +39,8 @@ public class Unit extends NetworkEntity {
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
         super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, new byte[0], true);
+
+        CollisionTest.addUnit(this);
 
         this.speed = 0;
         this.maxSpeed = 0;
@@ -178,5 +182,16 @@ public class Unit extends NetworkEntity {
 
     public void setChangeDirection(int cd) {
     	changeDirection = cd;
+    }
+
+    public void instantStop() {
+    	speed = 0;
+    	changeSpeed = 0;
+    }
+
+    @Override
+    public void delete() {
+    	super.delete();
+    	CollisionTest.deleteUnit(this);
     }
 }
