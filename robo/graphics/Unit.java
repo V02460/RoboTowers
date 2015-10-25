@@ -108,16 +108,16 @@ public class Unit extends NetworkEntity {
         if (changeDirection == -1) {
             // by pi/40
             this.speed -= 0.02 * this.maxSpeed;
-            newDirection -= Math.PI * 0.025;
+            newDirection -= Math.PI * 0.0125;
         }
         else if (changeDirection == 1) {
             this.speed -= 0.02 * this.maxSpeed;
-            newDirection += Math.PI * 0.025;
+            newDirection += Math.PI * 0.0125;
         }
         this.setRotation(newDirection);
 
         double newX = this.getPosition().getX() + Math.cos(newDirection) * this.speed;
-        double newY = this.getPosition().getX() + Math.sin(newDirection) * this.speed;
+        double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
         this.setPosition(new Point2d(newX, newY));
     }
 

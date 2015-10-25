@@ -40,20 +40,20 @@ public class RoboTowers extends BasicGame
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
+		ne = new NetworkEnviroment("localhost");
+		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
+		
 		map = new SimpleLayerMap(150, 150);
-		player = new Unit(new Point2d(100, 100), 0, new Materials[0]);
+		Materials[] ms = new Materials[1];
+		ms[0] = Materials.WHEELS;
+		player = new Unit(new Point2d(100, 100), 0, ms);
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		entitylist.addEntity(player);
 
 		in = new Input(gc.getHeight());
-		
-		
-		// NETWORK STUFF
-		ne = new NetworkEnviroment("localhost");
-		NetworkEntity.setNetworkEnviroment(ne);
 
-		new NetworkEntity("robo/res/gfx/projectile.png", new Point2d(10, 3), 3.2f, 5, Type.BULLET, null, true);
+		new NetworkEntity("projectile.png", new Point2d(10, 3), 3.2f, 5, Type.BULLET, new byte[0], true);
 
 		// ne.setCreationCallback();
 		// ne.setDeletionCallback();
@@ -68,7 +68,7 @@ public class RoboTowers extends BasicGame
 		// needs: entity array
 
 		// ne.sendFrameUpdate();
-
+		player.update();
 		FrameCounter.frameNumber++;
 	}
 /*
@@ -108,9 +108,9 @@ public class RoboTowers extends BasicGame
 			break;
 		case Input.KEY_A:
 			if (in.isKeyDown(Input.KEY_D)) {
-				player.setChangeSpeed(1);
+				player.setChangeDirection(1);
 			} else {
-				player.setChangeSpeed(0);
+				player.setChangeDirection(0);
 			}
 			break;
 		case Input.KEY_S:
@@ -122,9 +122,9 @@ public class RoboTowers extends BasicGame
 			break;
 		case Input.KEY_D:
 			if (in.isKeyDown(Input.KEY_A)) {
-				player.setChangeSpeed(-1);
+				player.setChangeDirection(-1);
 			} else {
-				player.setChangeSpeed(0);
+				player.setChangeDirection(0);
 			}
 			break;
 		}
