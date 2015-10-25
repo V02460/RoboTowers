@@ -99,6 +99,7 @@ public class RoboTowers extends BasicGame {
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		player.giveShootOrder();
+		soundlist.playSound("gun.mp3");
 	}
 
 	@Override
