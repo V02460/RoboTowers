@@ -45,12 +45,7 @@ public class RoboTowers extends BasicGame {
 		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
-<<<<<<< HEAD
-		player = new Unit(new Point2d(3750, 3750), 0, ms);
-		entitylist = new EntityList();
-=======
 		player = new Unit(new Point2d(map.getPlayer1X()*32 + 16, map.getPlayer1Y()*32 + 16), 0, ms);
->>>>>>> refs/remotes/origin/master
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
