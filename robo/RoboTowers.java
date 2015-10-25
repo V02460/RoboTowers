@@ -20,6 +20,7 @@ import robo.graphics.EntityList;
 import robo.graphics.Materials;
 import robo.graphics.Unit;
 import robo.network.Type;
+import robo.sounds.Sounds;
 import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame
@@ -27,6 +28,7 @@ public class RoboTowers extends BasicGame
 	private Map map;
 	private Unit player;
 	EntityList entitylist;
+	Sounds soundlist; 
 	Camera camera;
 	
 
@@ -43,6 +45,9 @@ public class RoboTowers extends BasicGame
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
+		
+		
+		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
@@ -50,6 +55,8 @@ public class RoboTowers extends BasicGame
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		entitylist.addEntity(player);
+		soundlist=new Sounds();
+		soundlist.playSound("RoboTowers.mp3");
 
 		in = new Input(gc.getHeight());
 
@@ -69,6 +76,7 @@ public class RoboTowers extends BasicGame
 
 		// ne.sendFrameUpdate();
 		player.update();
+		camera.setPosition(player.getPosition().x, player.getPosition().y);
 		FrameCounter.frameNumber++;
 	}
 /*
@@ -82,7 +90,7 @@ public class RoboTowers extends BasicGame
 	public void keyPressed(int key, char c) {
 		switch (key) {
 		case Input.KEY_W:
-			player.setChangeSpeed(1);
+			player.setChangeSpeed(1);		
 			break;
 		case Input.KEY_A:
 			player.setChangeDirection(-1);
@@ -128,6 +136,7 @@ public class RoboTowers extends BasicGame
 			}
 			break;
 		}
+		
 	}
 
 	@Override
