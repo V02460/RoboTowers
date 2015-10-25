@@ -37,7 +37,7 @@ public class Unit extends NetworkEntity {
 
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
-        super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, new byte[0], true);
+        super("foundation.png", spawnPos, spawnDirection, 201, Type.PLAYER, new byte[0], true);
 
         this.alive = true;
         this.doShoot = false;
@@ -82,13 +82,13 @@ public class Unit extends NetworkEntity {
         String armourBaseImg = "armourBase" + healthNum + ".png";
         String armourTowerImg = "armourTower" + healthNum + ".png";
 
-        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection, 102);
-        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection, 103);
+        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection, 202);
+        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection, 203);
 
         // Choose gfx for weapon
         String weaponImg = "weapon" + strengthNum + ".png";
 
-        weapon = new Entity(weaponImg, spawnPos, spawnDirection, 104);
+        weapon = new Entity(weaponImg, spawnPos, spawnDirection, 204);
 
     }
 

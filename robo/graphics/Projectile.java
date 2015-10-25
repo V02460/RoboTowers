@@ -18,7 +18,7 @@ public class Projectile extends NetworkEntity {
     private float power;
 
     public Projectile(Point2d spawnPosition, float spawnDirection, float spawnPower) throws SlickException{
-        super("projectile.png", spawnPosition, spawnDirection, 201, Type.BULLET, new byte[0], true);
+        super("projectile.png", spawnPosition, spawnDirection, 101, Type.BULLET, new byte[0], true);
 
         this.power = spawnPower;
     }
