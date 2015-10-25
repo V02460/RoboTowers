@@ -11,9 +11,9 @@ public class Entity {
 	private int layer;
 	
 	public Entity(String path, Point2d p, float r, int l) {
-		setPosition(p);
-		setRotation(r);
-		setLayer(l);
+		this.position = p;
+		this.rotation = r;
+		this.layer = l;
 		image = "robo/res/gfx/" + path;
 	}
 	

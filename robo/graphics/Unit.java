@@ -14,7 +14,7 @@ import javax.vecmath.Point2d;
  *
  *
  */
-public abstract class Unit extends NetworkEntity {
+public class Unit extends NetworkEntity {
 
     private boolean alive;
 
@@ -24,6 +24,9 @@ public abstract class Unit extends NetworkEntity {
     private double speed;
     private double maxSpeed;
     private double health;
+    
+    private int changeSpeed;
+    private int changeDirection;
 
     private Materials[] sockets;
 
@@ -33,7 +36,7 @@ public abstract class Unit extends NetworkEntity {
 
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
-        super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, null, true);
+        super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, new byte[0], true);
 
         this.speed = 0;
         this.maxSpeed = 0;
@@ -81,18 +84,9 @@ public abstract class Unit extends NetworkEntity {
 
         weapon = new Entity(weaponImg, spawnPos, spawnDirection, 104);
 
-}
-
-
-    public void update() {
-        this.update(0, 0);
     }
 
-    public void update(int changeSpeed) {
-        this.update(changeSpeed, 0);
-    }
-
-    public void update(int changeSpeed, int changeDirection){
+    public void update(){
         if (changeSpeed == -1) {
             this.speed -= 0.1*this.maxSpeed;
         }
@@ -114,16 +108,16 @@ public abstract class Unit extends NetworkEntity {
         if (changeDirection == -1) {
             // by pi/40
             this.speed -= 0.02 * this.maxSpeed;
-            newDirection -= Math.PI * 0.025;
+            newDirection -= Math.PI * 0.0125;
         }
         else if (changeDirection == 1) {
             this.speed -= 0.02 * this.maxSpeed;
-            newDirection += Math.PI * 0.025;
+            newDirection += Math.PI * 0.0125;
         }
         this.setRotation(newDirection);
 
         double newX = this.getPosition().getX() + Math.cos(newDirection) * this.speed;
-        double newY = this.getPosition().getX() + Math.sin(newDirection) * this.speed;
+        double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
         this.setPosition(new Point2d(newX, newY));
     }
 
@@ -167,4 +161,11 @@ public abstract class Unit extends NetworkEntity {
         }
     }
 
+    public void setChangeSpeed(int cs) {
+    	changeSpeed = cs;
+    }
+
+    public void setChangeDirection(int cd) {
+    	changeDirection = cd;
+    }
 }
