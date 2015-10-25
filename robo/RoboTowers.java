@@ -2,31 +2,35 @@ package robo;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import javax.vecmath.Point2d;
 
 import robo.network.NetworkEnviroment;
 import robo.network.NetworkEntity;
-
 import robo.map.Map;
 import robo.map.SimpleLayerMap;
 import robo.graphics.EntityList;
-import robo.graphics.EntityList;
+import robo.graphics.Materials;
+import robo.graphics.Unit;
 import robo.network.Type;
 
 public class RoboTowers extends BasicGame
 {
 	private Map map;
+	private Unit player;
 	EntityList entitylist;
 	double x_off;
 	double y_off;
 	
 	private NetworkEnviroment ne;
+	private Input in;
 	
 	public RoboTowers(String gamename)
 	{
@@ -36,9 +40,12 @@ public class RoboTowers extends BasicGame
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		map = new SimpleLayerMap(40, 40);
+		player = new Unit(new Point2d(100, 100), 0, new Materials[0]);
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
+		entitylist.addEntity(player);
 
+		in = new Input(gc.getHeight());
 		// Camera Offset to be moved into Player
 		x_off=0;
 		y_off=0;
@@ -66,6 +73,64 @@ public class RoboTowers extends BasicGame
 		// ne.sendFrameUpdate();
 
 		FrameCounter.frameNumber++;
+	}
+/*
+	@Override
+	public void mouseClicked(int button, int x, int y, int clickCount) {
+		
+	}
+*/
+
+	@Override
+	public void keyPressed(int key, char c) {
+		switch (key) {
+		case Input.KEY_W:
+			player.setChangeSpeed(1);
+			break;
+		case Input.KEY_A:
+			player.setChangeDirection(-1);
+			break;
+		case Input.KEY_S:
+			player.setChangeSpeed(-1);
+			break;
+		case Input.KEY_D:
+			player.setChangeDirection(1);
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(int key, char c) {
+		switch (key) {
+		case Input.KEY_W:
+			if (in.isKeyDown(Input.KEY_S)) {
+				player.setChangeSpeed(-1);
+			} else {
+				player.setChangeSpeed(0);
+			}
+			break;
+		case Input.KEY_A:
+			if (in.isKeyDown(Input.KEY_D)) {
+				player.setChangeSpeed(1);
+			} else {
+				player.setChangeSpeed(0);
+			}
+			break;
+		case Input.KEY_S:
+			if (in.isKeyDown(Input.KEY_W)) {
+				player.setChangeSpeed(1);
+			} else {
+				player.setChangeSpeed(0);
+			}
+			break;
+		case Input.KEY_D:
+			if (in.isKeyDown(Input.KEY_A)) {
+				player.setChangeSpeed(-1);
+			} else {
+				player.setChangeSpeed(0);
+			}
+			break;
+		}
 	}
 
 	@Override
