@@ -6,6 +6,7 @@ import robo.collision.CollisionTest;
 import robo.network.NetworkEntity;
 import robo.network.Type;
 import robo.sounds.Sounds;
+import javafx.scene.media.MediaPlayer;
 
 import javax.vecmath.Point2d;
 
@@ -208,6 +209,10 @@ public class Unit extends NetworkEntity {
     }
 
     public void instantStop() {
+    	if(speed>=1.0) {
+    		soundlist.playSound("crash.mp3");
+    	}
+    	
     	speed = 0;
     	changeSpeed = 0;
     }

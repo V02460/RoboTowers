@@ -3,6 +3,7 @@ package robo;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -44,8 +45,10 @@ public class RoboTowers extends BasicGame {
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
+		Random random=new Random();
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
+		
 		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
@@ -54,6 +57,7 @@ public class RoboTowers extends BasicGame {
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();
 		soundlist.playSound("RoboTowers.mp3");
+		soundlist.playBGM("bgm"+ (random.nextInt(2) +1) +".mp3");
 
 		in = new Input(gc.getHeight());
 
