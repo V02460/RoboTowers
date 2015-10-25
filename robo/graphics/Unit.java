@@ -138,7 +138,8 @@ public class Unit extends NetworkEntity {
         this.setPosition(new Point2d(newX, newY));
 
         if (doShoot) {
-            new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
+            Projectile p = new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
+            p.update();
             doShoot = false;
         }
     }

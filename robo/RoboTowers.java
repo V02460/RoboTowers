@@ -30,7 +30,7 @@ public class RoboTowers extends BasicGame {
 	private Unit player;
 	Sounds soundlist; 
 	Camera camera;
-	
+
 	private NetworkEnviroment ne;
 	private Input in;
 	
@@ -45,7 +45,7 @@ public class RoboTowers extends BasicGame {
 		
 		map = new SimpleLayerMap(150, 150);
 		Materials[] ms = createRandomLoadOut();
-		player = new Unit(new Point2d(100, 100), 0, ms);
+		player = new Unit(new Point2d(map.getPlayer1X()*32 + 16, map.getPlayer1Y()*32 + 16), 0, ms);
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
 		soundlist=new Sounds();

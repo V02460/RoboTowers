@@ -2,6 +2,9 @@ package robo.map;
 
 public class SimpleLayerMap extends Map {
 
+	private int playerX;
+	private int playerY;
+
 	/*public static void main(String[] args) {
 		Map m = new SimpleLayerMap(50, 50);
 		System.out.println(m);
@@ -53,8 +56,8 @@ public class SimpleLayerMap extends Map {
 		}
 
 		// setup random player spawn
-		int playerX = (int) ((1 + Math.random())*0.125*tiles.length);
-		int playerY = (int) ((1 + Math.random())*0.125*tiles[0].length);
+		playerX = (int) ((1 + Math.random())*0.125*tiles.length);
+		playerY = (int) ((1 + Math.random())*0.125*tiles[0].length);
 		tiles[playerX][playerY] = TileType.PlayerSpawn;
 		tiles[tiles.length-1-playerX][tiles[0].length-1-playerY] = TileType.PlayerSpawn;
 		
@@ -62,5 +65,25 @@ public class SimpleLayerMap extends Map {
 		// nothing Tiles
 		// tower slots
 		// powerups
+	}
+
+	@Override
+	public int getPlayer1X() {
+		return playerX;
+	}
+
+	@Override
+	public int getPlayer1Y() {
+		return playerY;
+	}
+
+	@Override
+	public int getPlayer2X() {
+		return tiles.length-1-playerX;
+	}
+
+	@Override
+	public int getPlayer2Y() {
+		return tiles[0].length-1-playerY;
 	}
 }

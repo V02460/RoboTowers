@@ -38,12 +38,13 @@ public class CollisionTest {
 	}
 
 	public static void checkColisions() {
+		List<Entity> toDeleate = new LinkedList<>();
 		if (map != null) {
 			// Bullets vs. Walls
 			for (Projectile b : bullets) {
 				Pair<Integer, Integer> p = pointToTile(b.getPosition());
 				if (map.get(p.getKey(), p.getValue()) == TileType.Wall) {
-					b.delete();
+					toDeleate.add(b);
 				}
 			}
 			// Walls vs. Units
@@ -65,9 +66,15 @@ public class CollisionTest {
 			for (Unit u : units) {
 				if (Math.sqrt(Math.pow(b.getPosition().x-u.getPosition().x, 2) + Math.pow(b.getPosition().y-u.getPosition().y, 2)) < 9) {
 					u.loseHealth(b.getPower());
-					b.delete();
+					toDeleate.add(b);
 				}
 			}
+		}
+
+		// Actually deleate things
+		while (!toDeleate.isEmpty()) {
+			toDeleate.get(0).delete();
+			toDeleate.remove(0);
 		}
 	}
 
