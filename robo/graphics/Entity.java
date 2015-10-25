@@ -16,6 +16,7 @@ public class Entity {
 		this.layer = l;
 		image = "robo/res/gfx/" + path;
 		EntityList.addEntity(this);
+
 	}
 	
 	public Point2d getPosition() {

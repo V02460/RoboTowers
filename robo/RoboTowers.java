@@ -23,14 +23,18 @@ import robo.collision.CollisionTest;
 import robo.collision.CollisionType;
 import robo.graphics.Entity;
 import robo.graphics.EntityList;
+import robo.graphics.EntityUpdateList;
 import robo.graphics.Materials;
 import robo.graphics.Unit;
 import robo.network.Type;
+import robo.sounds.Sounds;
 import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
+	EntityList entitylist;
+	Sounds soundlist; 
 	Camera camera;
 	
 	private NetworkEnviroment ne;
@@ -45,12 +49,17 @@ public class RoboTowers extends BasicGame {
 		ne = new NetworkEnviroment("localhost");
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
+		
+		
+		
 		map = new SimpleLayerMap(150, 150);
-		Materials[] ms = new Materials[1];
-		ms[0] = Materials.WHEELS;
+		Materials[] ms = createRandomLoadOut();
 		player = new Unit(new Point2d(400, 400), 0, ms);
+		entitylist = new EntityList();
 		EntityList.insertMap(map);
 		CollisionTest.setMap(map);
+		soundlist=new Sounds();
+		soundlist.playSound("RoboTowers.mp3");
 
 		in = new Input(gc.getHeight());
 
@@ -62,6 +71,19 @@ public class RoboTowers extends BasicGame {
 		// ne.setHitCallback();
 	}
 
+
+	// FIXME: This should be only temporary
+	private Materials[] createRandomLoadOut() {
+		Materials[] mats = new Materials[7];
+		mats[0] = Materials.WHEELS;
+
+		for (int i = 1; i < mats.length; i++) {
+			mats[i] = Materials.randomMaterial();
+		}
+
+		return mats;
+	}
+
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException
 	{
@@ -70,16 +92,33 @@ public class RoboTowers extends BasicGame {
 
 		// ne.sendFrameUpdate();
 		CollisionTest.checkColisions();
-		player.update();
+		EntityUpdateList.updateEntities();
 		camera.setPosition(player.getPosition().x, player.getPosition().y);
 		FrameCounter.frameNumber++;
 	}
-/*
+
+
 	@Override
-	public void mouseClicked(int button, int x, int y, int clickCount) {
-		
+	public void render(GameContainer gc, Graphics g) throws SlickException {
+		//g.drawString("Howdy!", 10, 10);
+		// Camera Auto-Moving
+		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
+		EntityList.drawEntities(camera);
 	}
-*/
+
+	@Override
+	public void mousePressed(int button, int x, int y) {
+		player.giveShootOrder();
+		soundlist.playSound("gun.mp3");
+	}
+
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		int diffX = newx - camera.getWidth()/2;
+		int diffY = newy - camera.getHeight()/2;
+
+		player.aim(diffX, diffY);
+	}
 
 	@Override
 	public void keyPressed(int key, char c) {
@@ -139,14 +178,7 @@ public class RoboTowers extends BasicGame {
 				}
 				break;
 		}
-	}
-
-	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException {
-		//g.drawString("Howdy!", 10, 10);
-		// Camera Auto-Moving
-		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
-		EntityList.drawEntities(camera);
+		
 	}
 
 	public static void main(String[] args) {

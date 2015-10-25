@@ -19,6 +19,7 @@ import javax.vecmath.Point2d;
 public class Unit extends NetworkEntity {
 
     private boolean alive;
+    private boolean doShoot;
 
     // direction angle in radians
     private double aimDirection;
@@ -38,7 +39,10 @@ public class Unit extends NetworkEntity {
 
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
-        super("foundation.png", spawnPos, spawnDirection, 101, Type.PLAYER, new byte[0], true);
+        super("foundation.png", spawnPos, spawnDirection, 201, Type.PLAYER, new byte[0], true);
+
+        this.alive = true;
+        this.doShoot = false;
 
         CollisionTest.addUnit(this);
 
@@ -82,41 +86,47 @@ public class Unit extends NetworkEntity {
         String armourBaseImg = "armourBase" + healthNum + ".png";
         String armourTowerImg = "armourTower" + healthNum + ".png";
 
-        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection, 102);
-        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection, 103);
+        armourBase = new Entity(armourBaseImg, spawnPos, spawnDirection, 202);
+        armourTower = new Entity(armourTowerImg, spawnPos, spawnDirection, 203);
 
         // Choose gfx for weapon
         String weaponImg = "weapon" + strengthNum + ".png";
 
-        weapon = new Entity(weaponImg, spawnPos, spawnDirection, 104);
+        weapon = new Entity(weaponImg, spawnPos, spawnDirection, 204);
 
     }
 
-    public void update(){
+    public void update() throws SlickException{
+        double acceleration;
         if (changeSpeed == -1) {
-            this.speed -= 0.1*this.maxSpeed;
+            acceleration = -Math.pow(this.speed, 2)/10;
+            //this.speed -= 0.1*this.maxSpeed;
         }
         else if (changeSpeed == 1) {
-            this.speed += 0.1*this.maxSpeed;
+            acceleration  = Math.pow(this.maxSpeed - this.speed, 2)/10;
+            //this.speed += 0.1*this.maxSpeed;
         }
         else {
-            this.speed -= 0.01*this.maxSpeed;
+            acceleration = -Math.pow(this.speed, 2)/100;
+            //this.speed -= 0.01*this.maxSpeed;
         }
 
 
         float newDirection = this.getRotation();
         if (changeDirection == -1) {
-            // by pi/40
-            this.speed -= 0.1 * this.maxSpeed;
+            acceleration -= this.speed/20;
+            //this.speed -= 0.1 * this.maxSpeed;
             newDirection -= Math.PI * 0.0125;
         }
         else if (changeDirection == 1) {
-            this.speed -= 0.1 * this.maxSpeed;
+            acceleration -= this.speed/20;
+            //this.speed -= 0.1 * this.maxSpeed;
             newDirection += Math.PI * 0.0125;
         }
+        this.speed += acceleration;
         this.setRotation(newDirection);
 
-        if (this.speed < 0) {
+        if (this.speed < 0 || this.speed < 0.2 && acceleration < 0) {
             this.speed = 0;
         }
         else if (this.speed > this.maxSpeed) {
@@ -126,6 +136,11 @@ public class Unit extends NetworkEntity {
         double newX = this.getPosition().getX() + Math.cos(newDirection) * this.speed;
         double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
         this.setPosition(new Point2d(newX, newY));
+
+        if (doShoot) {
+            new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
+            doShoot = false;
+        }
     }
 
     @Override
@@ -140,20 +155,14 @@ public class Unit extends NetworkEntity {
     public void setRotation(float direction) {
         super.setRotation(direction);
         armourBase.setRotation(direction);
-        armourTower.setRotation(direction);
-        weapon.setRotation(direction);
+        armourTower.setRotation((float)this.aimDirection);
+        weapon.setRotation((float)this.aimDirection);
     }
 
-    public void shoot() throws SlickException {
-        Projectile bullet = new Projectile(this.getPosition(), this.getRotation(), (float) this.strength);
-         //TODO: register projectiles for Collision Detection
-    }
 
-    public void aim(Point2d targetPos){
-        double x = targetPos.getX() - this.getPosition().getX();
-        double y = targetPos.getY() - this.getPosition().getY();
+    public void aim(int diffX, int diffY){
 
-        this.aimDirection = Math.atan2(y, x);
+        this.aimDirection = Math.atan2(diffY, diffX);
 
     }
 
@@ -174,6 +183,10 @@ public class Unit extends NetworkEntity {
         if (alive) {
             health += heal;
         }
+    }
+
+    public void giveShootOrder() {
+        this.doShoot = true;
     }
 
     public void setChangeSpeed(int cs) {
