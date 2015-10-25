@@ -18,6 +18,7 @@ public class Unit extends NetworkEntity {
 
     private boolean alive;
     private boolean doShoot;
+    private int shotCooldown;
 
     // direction angle in radians
     private double aimDirection;
@@ -41,6 +42,7 @@ public class Unit extends NetworkEntity {
 
         this.alive = true;
         this.doShoot = false;
+        this.shotCooldown = 0;
 
         this.speed = 0;
         this.maxSpeed = 0;
@@ -133,7 +135,9 @@ public class Unit extends NetworkEntity {
         double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
         this.setPosition(new Point2d(newX, newY));
 
-        if (doShoot) {
+        --shotCooldown;
+        if (doShoot && shotCooldown <= 0) {
+            shotCooldown = 30;
             new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
             doShoot = false;
         }
