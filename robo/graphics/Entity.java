@@ -6,7 +6,7 @@ import javax.vecmath.Point2d;
 
 public class Entity {
 	private Point2d position;
-	private float rotation;
+	private float rotation;				// Saved in Radians
 	private String image;
 	private int layer;
 	

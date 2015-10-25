@@ -44,7 +44,8 @@ public class EntityList {
 				// Check whether Image is inside Window			
 				if(x+image.getWidth()>=0 && x-image.getWidth()<=camera.getWidth()){
 					if(y+image.getHeight()>=0 && y-image.getHeight()<=camera.getHeight()){
-						// Draw Entity
+						// Draw Entity					
+						image.setRotation((float) (e.getRotation()*360/(2.0*Math.PI)));
 						image.drawCentered((float) x,(float) y);
 					}
 				}
