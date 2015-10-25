@@ -206,6 +206,18 @@ public class Unit extends NetworkEntity {
     	changeSpeed = 0;
     }
 
+    public double getStrength() {
+        return this.strength;
+    }
+
+    public double getHealth() {
+        return this.health;
+    }
+
+    public double getSpeed() {
+        return this.speed;
+    }
+
     @Override
     public void delete() {
     	super.delete();

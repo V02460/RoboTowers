@@ -1,38 +1,33 @@
 package robo;
 
+import java.awt.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.DecimalFormat;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 import javafx.util.Pair;
 
 import javax.vecmath.Point2d;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import robo.graphics.*;
 import robo.network.NetworkEnviroment;
 import robo.network.NetworkEntity;
 import robo.map.Map;
 import robo.map.SimpleLayerMap;
 import robo.collision.CollisionTest;
 import robo.collision.CollisionType;
-import robo.graphics.Entity;
-import robo.graphics.EntityList;
-import robo.graphics.EntityUpdateList;
-import robo.graphics.Materials;
-import robo.graphics.Unit;
 import robo.network.Type;
 import robo.sounds.Sounds;
-import robo.graphics.Camera;
 
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
+	private Overlay overlay;
 	EntityList entitylist;
 	Sounds soundlist; 
 	Camera camera;
@@ -53,6 +48,7 @@ public class RoboTowers extends BasicGame {
 		
 		
 		map = new SimpleLayerMap(150, 150);
+		overlay = new Overlay();
 		Materials[] ms = createRandomLoadOut();
 		player = new Unit(new Point2d(400, 400), 0, ms);
 		entitylist = new EntityList();
@@ -74,7 +70,7 @@ public class RoboTowers extends BasicGame {
 
 	// FIXME: This should be only temporary
 	private Materials[] createRandomLoadOut() {
-		Materials[] mats = new Materials[7];
+		Materials[] mats = new Materials[6];
 		mats[0] = Materials.WHEELS;
 
 		for (int i = 1; i < mats.length; i++) {
@@ -94,6 +90,7 @@ public class RoboTowers extends BasicGame {
 		CollisionTest.checkColisions();
 		EntityUpdateList.updateEntities();
 		camera.setPosition(player.getPosition().x, player.getPosition().y);
+		overlay.update();
 		FrameCounter.frameNumber++;
 	}
 
@@ -104,6 +101,21 @@ public class RoboTowers extends BasicGame {
 		// Camera Auto-Moving
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
 		EntityList.drawEntities(camera);
+
+		g.setColor(new org.newdawn.slick.Color(100,100,100,220));
+		g.fillRoundRect(6, 40, 90, 90, 6);
+		g.setColor(Color.white);
+
+		DecimalFormat df0 = new DecimalFormat( "##0" );
+		DecimalFormat df1 = new DecimalFormat("##0.0");
+
+		String hp = "HP: " + df0.format(player.getHealth());
+		g.drawString(hp, 10, 50);
+		String dmg = "DMG: " + df0.format(player.getStrength());
+		g.drawString(dmg, 10, 70);
+		String speed = "SPD: " + df1.format(player.getSpeed());
+		g.drawString(speed, 10, 90);
+
 	}
 
 	@Override

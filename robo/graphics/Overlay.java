@@ -1,5 +1,6 @@
 package robo.graphics;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 
 /**
@@ -8,7 +9,11 @@ import org.newdawn.slick.UnicodeFont;
 public class Overlay {
     private UnicodeFont ourFont;
 
-    public Overlay() {
-        font = new UnicodeFont(java.awt.font. font, )
+    public Overlay() throws SlickException{
+        ourFont = new UnicodeFont("robo/res/mytype.ttf", 18, false, false);
+    }
+
+    public void update() {
+        ourFont.drawString(20, 20, "IT WORKS!!!");
     }
 }
