@@ -68,7 +68,7 @@ public class RoboTowers extends BasicGame {
 
 	// FIXME: This should be only temporary
 	private Materials[] createRandomLoadOut() {
-		Materials[] mats = new Materials[7];
+		Materials[] mats = new Materials[6];
 		mats[0] = Materials.WHEELS;
 
 		for (int i = 1; i < mats.length; i++) {

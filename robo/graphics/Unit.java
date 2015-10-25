@@ -141,7 +141,7 @@ public class Unit extends NetworkEntity {
 
         --shotCooldown;
         if (doShoot && shotCooldown <= 0) {
-            shotCooldown = 30;
+            shotCooldown = 25;
             Projectile p = new Projectile(this.getPosition(), (float)this.aimDirection, (float) this.strength);
             p.update();
             doShoot = false;
