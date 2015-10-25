@@ -26,11 +26,8 @@ import robo.graphics.Camera;
 public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
-<<<<<<< HEAD
 	EntityList entitylist;
 	Sounds soundlist; 
-=======
->>>>>>> refs/remotes/origin/master
 	Camera camera;
 	
 	private NetworkEnviroment ne;
@@ -52,15 +49,11 @@ public class RoboTowers extends BasicGame {
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
 		player = new Unit(new Point2d(100, 100), 0, ms);
-<<<<<<< HEAD
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		entitylist.addEntity(player);
 		soundlist=new Sounds();
 		soundlist.playSound("RoboTowers.mp3");
-=======
-		EntityList.insertMap(map);
->>>>>>> refs/remotes/origin/master
 
 		in = new Input(gc.getHeight());
 
