@@ -15,9 +15,8 @@ public class Entity {
 		this.rotation = r;
 		this.layer = l;
 		image = "robo/res/gfx/" + path;
+		EntityList.addEntity(this);
 	}
-	
-	
 	
 	public Point2d getPosition() {
 		return position;
@@ -50,5 +49,8 @@ public class Entity {
 	public void setImageString(String path){
 		image = "robo/res/gfx/" + path;
 	}
-	
+
+	public void delete() {
+		
+	}
 }

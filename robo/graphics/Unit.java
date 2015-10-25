@@ -51,6 +51,8 @@ public class Unit extends NetworkEntity {
         for (int i = 0; i < sockets.length; i++) {
             switch(sockets[i]) {
                 case WHEELS:
+                    if (this.maxSpeed == 0)
+                        this.maxSpeed = 1;
                     this.maxSpeed += 1;
                     break;
                 case ARMOUR:
@@ -97,24 +99,25 @@ public class Unit extends NetworkEntity {
             this.speed -= 0.01*this.maxSpeed;
         }
 
+
+        float newDirection = this.getRotation();
+        if (changeDirection == -1) {
+            // by pi/40
+            this.speed -= 0.1 * this.maxSpeed;
+            newDirection -= Math.PI * 0.0125;
+        }
+        else if (changeDirection == 1) {
+            this.speed -= 0.1 * this.maxSpeed;
+            newDirection += Math.PI * 0.0125;
+        }
+        this.setRotation(newDirection);
+
         if (this.speed < 0) {
             this.speed = 0;
         }
         else if (this.speed > this.maxSpeed) {
             this.speed = this.maxSpeed;
         }
-
-        float newDirection = this.getRotation();
-        if (changeDirection == -1) {
-            // by pi/40
-            this.speed -= 0.02 * this.maxSpeed;
-            newDirection -= Math.PI * 0.0125;
-        }
-        else if (changeDirection == 1) {
-            this.speed -= 0.02 * this.maxSpeed;
-            newDirection += Math.PI * 0.0125;
-        }
-        this.setRotation(newDirection);
 
         double newX = this.getPosition().getX() + Math.cos(newDirection) * this.speed;
         double newY = this.getPosition().getY() + Math.sin(newDirection) * this.speed;
@@ -127,6 +130,14 @@ public class Unit extends NetworkEntity {
         armourBase.setPosition(position);
         armourTower.setPosition(position);
         weapon.setPosition(position);
+    }
+
+    @Override
+    public void setRotation(float direction) {
+        super.setRotation(direction);
+        armourBase.setRotation(direction);
+        armourTower.setRotation(direction);
+        weapon.setRotation(direction);
     }
 
     public void shoot() throws SlickException {

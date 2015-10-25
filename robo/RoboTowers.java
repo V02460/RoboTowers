@@ -23,20 +23,20 @@ import robo.network.Type;
 import robo.sounds.Sounds;
 import robo.graphics.Camera;
 
-public class RoboTowers extends BasicGame
-{
+public class RoboTowers extends BasicGame {
 	private Map map;
 	private Unit player;
+<<<<<<< HEAD
 	EntityList entitylist;
 	Sounds soundlist; 
+=======
+>>>>>>> refs/remotes/origin/master
 	Camera camera;
 	
-
 	private NetworkEnviroment ne;
 	private Input in;
 	
-	public RoboTowers(String gamename)
-	{
+	public RoboTowers(String gamename) {
 		super(gamename);
 	}
 
@@ -52,11 +52,15 @@ public class RoboTowers extends BasicGame
 		Materials[] ms = new Materials[1];
 		ms[0] = Materials.WHEELS;
 		player = new Unit(new Point2d(100, 100), 0, ms);
+<<<<<<< HEAD
 		entitylist = new EntityList();
 		entitylist.insertMap(map);
 		entitylist.addEntity(player);
 		soundlist=new Sounds();
 		soundlist.playSound("RoboTowers.mp3");
+=======
+		EntityList.insertMap(map);
+>>>>>>> refs/remotes/origin/master
 
 		in = new Input(gc.getHeight());
 
@@ -89,78 +93,80 @@ public class RoboTowers extends BasicGame
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
-		case Input.KEY_W:
-			player.setChangeSpeed(1);
-			break;
-		case Input.KEY_A:
-			player.setChangeDirection(-1);
-			break;
-		case Input.KEY_S:
-			player.setChangeSpeed(-1);
-			break;
-		case Input.KEY_D:
-			player.setChangeDirection(1);
-			break;
+			case Input.KEY_W:
+			case Input.KEY_UP:
+				player.setChangeSpeed(1);
+				break;
+			case Input.KEY_A:
+			case Input.KEY_LEFT:
+				player.setChangeDirection(-1);
+				break;
+			case Input.KEY_S:
+			case Input.KEY_DOWN:
+				player.setChangeSpeed(-1);
+				break;
+			case Input.KEY_D:
+			case Input.KEY_RIGHT:
+				player.setChangeDirection(1);
+				break;
 		}
 	}
 
 	@Override
 	public void keyReleased(int key, char c) {
 		switch (key) {
-		case Input.KEY_W:
-			if (in.isKeyDown(Input.KEY_S)) {
-				player.setChangeSpeed(-1);
-			} else {
-				player.setChangeSpeed(0);
-			}
-			break;
-		case Input.KEY_A:
-			if (in.isKeyDown(Input.KEY_D)) {
-				player.setChangeDirection(1);
-			} else {
-				player.setChangeDirection(0);
-			}
-			break;
-		case Input.KEY_S:
-			if (in.isKeyDown(Input.KEY_W)) {
-				player.setChangeSpeed(1);
-			} else {
-				player.setChangeSpeed(0);
-			}
-			break;
-		case Input.KEY_D:
-			if (in.isKeyDown(Input.KEY_A)) {
-				player.setChangeDirection(-1);
-			} else {
-				player.setChangeDirection(0);
-			}
-			break;
+			case Input.KEY_W:
+			case Input.KEY_UP:
+				if (in.isKeyDown(Input.KEY_S) || in.isKeyDown(Input.KEY_DOWN)) {
+					player.setChangeSpeed(-1);
+				} else {
+					player.setChangeSpeed(0);
+				}
+				break;
+			case Input.KEY_A:
+			case Input.KEY_LEFT:
+				if (in.isKeyDown(Input.KEY_D) || in.isKeyDown(Input.KEY_RIGHT)) {
+					player.setChangeDirection(1);
+				} else {
+					player.setChangeDirection(0);
+				}
+				break;
+			case Input.KEY_S:
+			case Input.KEY_DOWN:
+				if (in.isKeyDown(Input.KEY_W) || in.isKeyDown(Input.KEY_UP)) {
+					player.setChangeSpeed(1);
+				} else {
+					player.setChangeSpeed(0);
+				}
+				break;
+			case Input.KEY_D:
+			case Input.KEY_RIGHT:
+				if (in.isKeyDown(Input.KEY_A) || in.isKeyDown(Input.KEY_LEFT)) {
+					player.setChangeDirection(-1);
+				} else {
+					player.setChangeDirection(0);
+				}
+				break;
 		}
 		
 	}
 
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException
-	{
+	public void render(GameContainer gc, Graphics g) throws SlickException {
 		//g.drawString("Howdy!", 10, 10);
 		// Camera Auto-Moving
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
-		entitylist.drawEntities(camera);
-		
-		
-		
+		EntityList.drawEntities(camera);
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		RoboTowers rt=new RoboTowers("RoboTowers Epicness!!!1111einself");
 		System.out.println("Hello RoboTowers");
 		rt.camera=new Camera();
 		rt.camera.setPosition(0,0);
 		rt.camera.setWindow(800,600);
 
-		try
-		{
+		try {
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(rt);
 
@@ -169,9 +175,7 @@ public class RoboTowers extends BasicGame
 			
 			appgc.setDisplayMode(rt.camera.getWidth(), rt.camera.getHeight(), false);
 			appgc.start();
-		}
-		catch (SlickException ex)
-		{
+		} catch (SlickException ex) {
 			Logger.getLogger(RoboTowers.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
