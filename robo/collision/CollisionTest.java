@@ -6,6 +6,7 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import javafx.util.Pair;
+import robo.RoboTowers;
 import robo.graphics.Entity;
 import robo.graphics.Projectile;
 import robo.graphics.Unit;
@@ -49,10 +50,10 @@ public class CollisionTest {
 			}
 			// Walls vs. Units
 			for (Unit u : units) {
-				double leftX = u.getPosition().x + 22*Math.cos(-u.getRotation()) - 11*Math.sin(-u.getRotation());
-				double leftY = u.getPosition().y + 22*Math.cos(-u.getRotation()) + 11*Math.sin(-u.getRotation());
-				double rightX = u.getPosition().x + 22*Math.cos(-u.getRotation()) + 11*Math.sin(-u.getRotation());
-				double rightY = u.getPosition().y + 22*Math.cos(-u.getRotation()) - 11*Math.sin(-u.getRotation());
+				double leftX = u.getPosition().x + 22*Math.cos(u.getRotation()) - 11*Math.sin(u.getRotation());
+				double leftY = u.getPosition().y + 22*Math.cos(u.getRotation()) + 11*Math.sin(u.getRotation());
+				double rightX = u.getPosition().x + 22*Math.cos(u.getRotation()) + 11*Math.sin(u.getRotation());
+				double rightY = u.getPosition().y + 22*Math.cos(u.getRotation()) - 11*Math.sin(u.getRotation());
 				Pair<Integer, Integer> leftP = pointToTile(new Point2d(leftX, leftY));
 				Pair<Integer, Integer> rightP = pointToTile(new Point2d(rightX, rightY));
 				if (map.get(leftP.getKey(), leftP.getValue()) == TileType.Wall ||
@@ -79,6 +80,6 @@ public class CollisionTest {
 	}
 
 	public static Pair<Integer, Integer> pointToTile(Point2d p) {
-		return new Pair<Integer, Integer>((int) p.x/32, (int) p.y/32);
+		return new Pair<Integer, Integer>((int) p.x/RoboTowers.TILE_SIZE, (int) p.y/RoboTowers.TILE_SIZE);
 	}
 }
