@@ -100,7 +100,6 @@ public class SplitScreen extends BasicGame {
 		//camera.setPosition(camera.getX()+1.0, camera.getY()+1.0);
 		EntityList.drawEntities(camera1,1);
 		EntityList.drawEntities(camera2,2);
-		// TODO research here
 
 		g.setColor(new Color(100,150,100,220));
 		g.fillRoundRect(6, 40, 90, 90, 6);
@@ -109,14 +108,23 @@ public class SplitScreen extends BasicGame {
 		DecimalFormat df0 = new DecimalFormat( "##0" );
 		DecimalFormat df1 = new DecimalFormat("##0.0");
 
-		// TODO for player 2
-
 		String hp = "HP: " + df0.format(player1.getHealth());
 		g.drawString(hp, 10, 50);
 		String dmg = "DMG: " + df0.format(player1.getStrength());
 		g.drawString(dmg, 10, 70);
 		String speed = "SPD: " + df1.format(player1.getSpeed());
 		g.drawString(speed, 10, 90);
+
+		g.setColor(new Color(100,100,150,220));
+		g.fillRoundRect(6, 120, 90, 90, 6);
+		g.setColor(Color.white);
+
+		String hp2 = "HP: " + df0.format(player2.getHealth());
+		g.drawString(hp2, 10, 130);
+		String dmg2 = "DMG: " + df0.format(player2.getStrength());
+		g.drawString(dmg2, 10, 150);
+		String speed2 = "SPD: " + df1.format(player2.getSpeed());
+		g.drawString(speed2, 10, 170);
 	}
 
 	// TODO few next for player 2
