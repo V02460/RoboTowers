@@ -8,6 +8,8 @@ import robo.network.Type;
 import robo.sounds.Sounds;
 
 import javax.vecmath.Point2d;
+import java.nio.ByteBuffer;
+
 
 /**
  * Created by Matthias on 24.10.2015.
@@ -40,9 +42,50 @@ public class Unit extends NetworkEntity {
     private Entity armourTower;
     private Entity weapon;
 
+    public static Materials[] createRandomLoadOut() {
+        Materials[] mats = new Materials[6];
+        mats[0] = Materials.WHEELS;
+
+        for (int i = 1; i < mats.length; i++) {
+            mats[i] = Materials.randomMaterial();
+        }
+
+        return mats;
+    }
+
+    public static Unit createFromBlob(ByteBuffer blob)
+    {
+        Point2d spawnPos = new Point2d(blob.getDouble(), blob.getDouble());
+        float spawnDirection = blob.getFloat();
+        // TODO: decode materials
+        // Materials[] sockets
+
+        Unit unit = null;
+
+        try
+        {
+            unit = new Unit(spawnPos, spawnDirection, createRandomLoadOut());
+        } catch (Exception e) {
+            System.out.println("Slick exception");
+            e.printStackTrace();
+        }
+
+        return unit;
+    }
+
+    public static byte[] paramsToBlob(Point2d spawnPos, float spawnDirection, Materials[] sockets)
+    {
+        ByteBuffer blob = ByteBuffer.allocate(2*8 + 4);
+        blob.putDouble(spawnPos.x);
+        blob.putDouble(spawnPos.y);
+        blob.putFloat(spawnDirection);
+        blob.flip();
+        return blob.array();
+    }
 
     public Unit(Point2d spawnPos, float spawnDirection, Materials[] sockets) throws SlickException{
-        super("foundation.png", spawnPos, spawnDirection, 201, Type.PLAYER, new byte[0], true);
+        super("foundation.png", spawnPos, spawnDirection, 201, Type.PLAYER,
+                paramsToBlob(spawnPos, spawnDirection, sockets), true);
 
         soundlist=new Sounds();
 

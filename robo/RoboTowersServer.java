@@ -26,7 +26,9 @@ public class RoboTowersServer extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		// start server
-		ne = new NetworkEnviroment(null);
+
+		System.out.println("Server init");
+		ne = new NetworkEnviroment(null, 1234);
 
 		// ne.setCreationCallback();
 		// ne.setDeletionCallback();
@@ -37,6 +39,8 @@ public class RoboTowersServer extends BasicGame
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException
 	{
+		ne.receive();
+		
 		FrameCounter.frameNumber++;
 	}
 
@@ -53,7 +57,7 @@ public class RoboTowersServer extends BasicGame
 		try
 		{
 			AppGameContainer gc;
-			gc = new AppGameContainer(new RoboTowers("Simple Slick Game"));
+			gc = new AppGameContainer(new RoboTowersServer("Simple Slick Game"));
 
 			gc.setMinimumLogicUpdateInterval(20);
 			gc.setMaximumLogicUpdateInterval(20);
@@ -61,7 +65,7 @@ public class RoboTowersServer extends BasicGame
 		}
 		catch (SlickException ex)
 		{
-			Logger.getLogger(RoboTowers.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(RoboTowersServer.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 }

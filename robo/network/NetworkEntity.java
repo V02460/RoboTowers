@@ -26,10 +26,12 @@ public class NetworkEntity extends Entity
 		super(imagePath, position, rotation, layer);
 
 		this.doUpdates = doUpdates;
-		if (doUpdates) {
-			EntityUpdateList.addEntity(this);
-		}
-		ne.createEntity(type, params);
+
+//		if (doUpdates) {
+//			EntityUpdateList.addEntity(this);
+//		}
+		ne.createEntity(type, params, this, null);
+
 	}
 
 	@Override
@@ -50,6 +52,16 @@ public class NetworkEntity extends Entity
 		if (!doUpdates) return;
 
 		dirtyFrame = FrameCounter.getFrameCount();
+	}
+
+	void setPositionNoUpdate(Point2d position)
+	{
+		super.setPosition(position);
+	}
+
+	void setRotationNoUpdate(float rotation)
+	{
+		super.setRotation(rotation);
 	}
 
 	public void update() throws SlickException{}

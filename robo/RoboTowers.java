@@ -37,14 +37,16 @@ public class RoboTowers extends BasicGame {
 
 	private NetworkEnviroment ne;
 	private Input in;
-	
+
+	 private static int port;
+
 	public RoboTowers(String gamename) {
 		super(gamename);
 	}
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		ne = new NetworkEnviroment("localhost");
+		ne = new NetworkEnviroment("localhost", port);
 		NetworkEntity.setNetworkEnviroment(ne); // must be at the beginning of init
 		
 		map = new SimpleLayerMap(150, 150);
@@ -57,8 +59,6 @@ public class RoboTowers extends BasicGame {
 
 		in = new Input(gc.getHeight());
 
-		new NetworkEntity("projectile.png", new Point2d(10, 3), 3.2f, 5, Type.BULLET, new byte[0], true);
-
 		// ne.setCreationCallback();
 		// ne.setDeletionCallback();
 		// ne.setUpdateCallback();
@@ -67,7 +67,7 @@ public class RoboTowers extends BasicGame {
 
 
 	// FIXME: This should be only temporary
-	private Materials[] createRandomLoadOut() {
+	public static Materials[] createRandomLoadOut() {
 		Materials[] mats = new Materials[6];
 		mats[0] = Materials.WHEELS;
 
@@ -84,10 +84,13 @@ public class RoboTowers extends BasicGame {
 		// update all Entities
 		// needs: entity array
 
+		ne.receive();
+
 		// ne.sendFrameUpdate();
 		CollisionTest.checkColisions();
 		EntityUpdateList.updateEntities();
 		camera.setPosition(player.getPosition().x, player.getPosition().y);
+
 		FrameCounter.frameNumber++;
 	}
 
@@ -189,6 +192,7 @@ public class RoboTowers extends BasicGame {
 	}
 
 	public static void main(String[] args) {
+		port = Integer.parseInt(args[0]);
 		RoboTowers rt=new RoboTowers("RoboTowers Epicness!!!1111einself");
 		System.out.println("Hello RoboTowers");
 		rt.camera=new Camera();

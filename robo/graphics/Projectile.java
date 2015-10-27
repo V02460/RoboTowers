@@ -7,6 +7,7 @@ import robo.network.NetworkEntity;
 import robo.network.Type;
 
 import javax.vecmath.Point2d;
+import java.nio.ByteBuffer;
 
 /**
  * Created by Matthias on 24.10.2015.
@@ -19,8 +20,34 @@ public class Projectile extends NetworkEntity {
 
     private float power;
 
+    public static Projectile createFromBlob(ByteBuffer blob)
+    {
+        Point2d spawnPosition = new Point2d(blob.getDouble(), blob.getDouble());
+        float spawnDirection = blob.getFloat();
+        float spawnPower = blob.getFloat();
+        try
+        {
+            return new Projectile(spawnPosition, spawnDirection, spawnPower);
+        }
+        catch(Exception e) {e.printStackTrace();}
+
+        return null;
+    }
+
+    public static byte[] paramsToBlob(Point2d spawnPosition, float spawnDirection, float spawnPower)
+    {
+        ByteBuffer blob = ByteBuffer.allocate(2*8 + 4 + 4);
+        blob.putDouble(spawnPosition.x);
+        blob.putDouble(spawnPosition.y);
+        blob.putFloat(spawnDirection);
+        blob.putFloat(spawnPower);
+        blob.flip();
+        return blob.array();
+    }
+
     public Projectile(Point2d spawnPosition, float spawnDirection, float spawnPower) throws SlickException{
-        super("projectile.png", spawnPosition, spawnDirection, 101, Type.BULLET, new byte[0], true);
+        super("projectile.png", spawnPosition, spawnDirection, 101, Type.BULLET,
+                paramsToBlob(spawnPosition, spawnDirection, spawnPower), true);
 
         CollisionTest.addBullet(this);
         this.power = spawnPower;
